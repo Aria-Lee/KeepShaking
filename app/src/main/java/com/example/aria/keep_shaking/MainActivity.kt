@@ -20,6 +20,7 @@ import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.MediaController
+import com.example.aria.keep_shaking.Utils.Companion.isFastDoubleClick
 import kotlinx.android.synthetic.main.collection_dialog.view.*
 import kotlinx.android.synthetic.main.record_dialog.view.*
 import kotlinx.android.synthetic.main.result_dialog.view.*
@@ -52,8 +53,8 @@ class MainActivity : AppCompatActivity() {
             intiHandler()
             startOrStop()
         }
-        showRecord.setOnClickListener { showRecord() }
-        showCollection.setOnClickListener { showCollection() }
+        showRecord.setOnClickListener { if (!Utils.isFastDoubleClick()) showRecord() }
+        showCollection.setOnClickListener { if (!Utils.isFastDoubleClick()) showCollection() }
     }
 
     private lateinit var mSensorManager: SensorManager//體感(Sensor)使用管理
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     private var perTime: Long = 3000
     private var beginNum = 3
     private var coin = 500
+    private var costPerTime = 10
     private var resultIndex = 0
     private lateinit var handlerThread: HandlerThread
     private lateinit var looper: Looper
@@ -84,17 +86,19 @@ class MainActivity : AppCompatActivity() {
         else {
 //            when (startOrStop.text) {
 //                "START" -> {
-            coin -= 10
-            coinText.text = "$coin"
-            pref.saveCoin(coin)
-            recordList.add(RecordData(50, sdf.format(System.currentTimeMillis())))
-            pref.saveRecord(recordList)
-            beginTimerText.visibility = View.VISIBLE
-//            hideAndShowImage(beginTimerText, AlphaAnimation(0f, 1f), View.VISIBLE)
-            startOrStop.visibility = View.GONE
-//            hideAndShowImage(startOrStop, AlphaAnimation(1f, 0f), View.GONE)
-
-            handler.post(beginTimer)
+            if (!Utils.isFastDoubleClick()) {
+                coin -= costPerTime
+                coinText.text = "$coin"
+                pref.saveCoin(coin)
+                recordList.add(RecordData(costPerTime, sdf.format(System.currentTimeMillis())))
+                pref.saveRecord(recordList)
+                beginTimerText.visibility = View.VISIBLE
+                startOrStop.visibility = View.GONE
+                showCollectionText.visibility = View.GONE
+                showCollection.visibility = View.GONE
+                showRecord.hide()
+                handler.post(beginTimer)
+            }
         }
 //                "STOP" -> {
 //                    finishShake()
@@ -119,13 +123,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         beginTimer = Runnable {
-            runOnUiThread {
-                //                startOrStop.text = "STOP"
-                startOrStop.isClickable = false
-                showCollection.visibility = View.GONE
-//                hideAndShowImage(showCollection, AlphaAnimation(1f, 0f), View.GONE)
-                showRecord.hide()
-            }
 
             if (beginNum > 0) {
                 runOnUiThread {
@@ -136,9 +133,7 @@ class MainActivity : AppCompatActivity() {
             } else if (beginNum == 0) {
                 runOnUiThread {
                     beginTimerText.visibility = View.GONE
-//                    hideAndShowImage(beginTimerText, AlphaAnimation(1f, 0f), View.GONE)
                     countText.visibility = View.VISIBLE
-//                    hideAndShowImage(countText, AlphaAnimation(0f, 1f), View.VISIBLE)
 
                 }
                 initSensor()
@@ -224,20 +219,13 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             countText.text = "0"
             countText.visibility = View.GONE
-//            hideAndShowImage(countText, AlphaAnimation(1f, 0f), View.GONE)
 
             resultDialog()
 //            startOrStop.text = "START"
-            startOrStop.isClickable = true
             beginTimerText.visibility = View.GONE
-//            hideAndShowImage(beginTimerText, AlphaAnimation(1f, 0f), View.GONE)
-
             showCollection.visibility = View.VISIBLE
-//            hideAndShowImage(showCollection, AlphaAnimation(0f, 1f), View.VISIBLE)
-
+            showCollectionText.visibility = View.VISIBLE
             startOrStop.visibility = View.VISIBLE
-//            hideAndShowImage(startOrStop, AlphaAnimation(0f, 1f), View.VISIBLE)
-
             showRecord.show()
         }
     }
@@ -247,10 +235,6 @@ class MainActivity : AppCompatActivity() {
         valueAnim = ObjectAnimator.ofFloat(shakeImage, "translationY", 0.0f, -720.0f, 0.0f)
         valueAnim.setDuration(500)
         valueAnim.interpolator = DecelerateInterpolator()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     fun setVideo(view: View) {
@@ -325,11 +309,34 @@ class MainActivity : AppCompatActivity() {
     fun showCollection() {
         val view = LayoutInflater.from(this).inflate(R.layout.collection_dialog, null)
         view.collectRecyclerView.layoutManager = GridLayoutManager(this, 3)
-        view.collectRecyclerView.adapter = CollectionAdapter(this, collectionData)
+        val adpter = CollectionAdapter(this, collectionData)
+        adpter.setOnClickItemListener(object : CollectionAdapter.OnClickItemListener {
+            override fun onItemClick(index: Int) {
+                if (!isFastDoubleClick()) {
+                    resultIndex = index
+                    showVideo()
+                }
+            }
+        })
+        view.collectRecyclerView.adapter = adpter
         view.maxText.text = "目前最高紀錄：${collectionData.max} 下"
 
         AlertDialog.Builder(this)
             .setTitle("收藏冊")
+            .setView(view)
+            .setPositiveButton("OK") { dialog, which ->
+            }
+            .show()
+    }
+
+    fun showVideo() {
+        val view = LayoutInflater.from(this).inflate(R.layout.result_dialog, null)
+        view.videoTitle.visibility = View.GONE
+        view.newRecord.visibility = View.GONE
+        setVideo(view.videoView)
+
+        AlertDialog.Builder(this)
+            .setTitle("${collectionData.list[resultIndex].name}")
             .setView(view)
             .setPositiveButton("OK") { dialog, which ->
             }
@@ -343,33 +350,5 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton("OK") { dialog, which -> }
             .show()
     }
-
-    private fun hideAndShowImage(view: View, fade: AlphaAnimation, visibility: Int) {
-//        loading.animate()
-//                .translationY(loading.height.toFloat())
-//                .setDuration(700)
-//                .setListener(object : AnimatorListenerAdapter(){
-//                    override fun onAnimationEnd(animation: Animator?) {
-//                        super.onAnimationEnd(animation)
-//                        loading.visibility = View.GONE
-//                    }
-//                }).start()
-
-//        val fade = AlphaAnimation(1f,0f)
-        fade.duration = 600
-        fade.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-            }
-
-            override fun onAnimationStart(animation: Animation?) {
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                view.visibility = visibility
-            }
-
-        })
-    }
-
 
 }

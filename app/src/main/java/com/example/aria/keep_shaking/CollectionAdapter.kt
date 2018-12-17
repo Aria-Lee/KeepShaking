@@ -9,8 +9,17 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.collection.view.*
 import kotlinx.android.synthetic.main.record.view.*
 
-class CollectionAdapter(val context: Context, var data: CollectionData) :
-        RecyclerView.Adapter<CollectionAdapter.ViewHolder>() {
+class CollectionAdapter(val context: Context, var data: CollectionData) : RecyclerView.Adapter<CollectionAdapter.ViewHolder>() {
+
+    private var onClickItemListener : OnClickItemListener? = null
+    interface OnClickItemListener{
+        fun onItemClick(index : Int)
+    }
+
+    fun setOnClickItemListener(onClickItemListener: OnClickItemListener){
+        this.onClickItemListener = onClickItemListener
+    }
+
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.collection, p0, false)
         return ViewHolder(view)
@@ -22,6 +31,7 @@ class CollectionAdapter(val context: Context, var data: CollectionData) :
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.bind(data.list[p1])
+        p0.imageView.setOnClickListener { if(!Utils.isFastDoubleClick()) onClickItemListener!!.onItemClick(p1) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
