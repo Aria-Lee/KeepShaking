@@ -31,7 +31,7 @@ class CollectionAdapter(val context: Context, var data: CollectionData) : Recycl
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.bind(data.list[p1])
-        p0.imageView.setOnClickListener { if(!Utils.isFastDoubleClick()) onClickItemListener!!.onItemClick(p1) }
+        if(data.list[p1].isUnclock == true) p0.imageView.setOnClickListener { if(!Utils.isFastDoubleClick()) onClickItemListener!!.onItemClick(p1) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

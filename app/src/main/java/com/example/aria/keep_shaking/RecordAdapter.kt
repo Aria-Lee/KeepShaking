@@ -24,8 +24,8 @@ class RecordAdapter(val context: Context, var list: MutableList<RecordData>) :
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val cost = itemView.cost
-        val costTime = itemView.costTime
+        val cost = itemView.coin
+        val costTime = itemView.recordTime
 
         @SuppressLint("SetTextI18n")
         fun bind(data: RecordData) {

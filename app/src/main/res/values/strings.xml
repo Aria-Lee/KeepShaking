@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Keep_Shaking</string>
+    <string name="app_name">Keep Shaking</string>
+    <string name="baseURL">http://192.168.52.130:8000</string>
 </resources>

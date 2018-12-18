@@ -5,7 +5,10 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#00DDAA</item>
+        <item name="colorAccent">#444444</item>
+    </style>
+    <style name="Loading" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">#0066FF</item>
     </style>
 
 </resources>

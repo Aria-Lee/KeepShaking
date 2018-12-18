@@ -1,6 +1,7 @@
 package com.example.aria.keep_shaking
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.hardware.Sensor
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,18 +13,17 @@ import android.os.*
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.transition.Fade
-import android.view.LayoutInflater
-import android.view.View
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
+import android.view.*
 import android.view.animation.DecelerateInterpolator
-import android.view.animation.LinearInterpolator
 import android.widget.MediaController
+import android.widget.Toast
 import com.example.aria.keep_shaking.Utils.Companion.isFastDoubleClick
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.achievement_dialog.view.*
 import kotlinx.android.synthetic.main.collection_dialog.view.*
 import kotlinx.android.synthetic.main.record_dialog.view.*
 import kotlinx.android.synthetic.main.result_dialog.view.*
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,28 +33,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        //取得體感(Sensor)服務使用權限
-        beginTimerText.visibility = View.GONE
-//        hideAndShowImage(beginTimerText, AlphaAnimation(1f, 0f), View.GONE)
-        countText.visibility = View.GONE
-//        hideAndShowImage(countText, AlphaAnimation(1f, 0f), View.GONE)
-        mSensorManager = this.getSystemService(SENSOR_SERVICE) as SensorManager
-        mSensor = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
-        pref = SharePreference(this)
-        coin = pref.getCoin()
-        recordList.addAll(pref.getRecord())
-        collectionData = pref.getCollection()
-        coinText.text = "$coin"
-        objectAnimator()
-        initRunnable()
-        startOrStop.setOnClickListener {
+        okHttp = OkHttp(this)
+        loadingRoot = window.decorView as ViewGroup
+        loadingView = LayoutInflater.from(this).inflate(R.layout.loading_layout, loadingRoot, false)
+        measureIntent()
+        init()
+        start.setOnClickListener {
             intiHandler()
             startOrStop()
         }
         showRecord.setOnClickListener { if (!Utils.isFastDoubleClick()) showRecord() }
         showCollection.setOnClickListener { if (!Utils.isFastDoubleClick()) showCollection() }
+        showAchievement.setOnClickListener { if (!Utils.isFastDoubleClick()) showAchievement() }
     }
 
     private lateinit var mSensorManager: SensorManager//體感(Sensor)使用管理
@@ -68,9 +58,10 @@ class MainActivity : AppCompatActivity() {
     private var goalNum = 20
     private var perTime: Long = 3000
     private var beginNum = 3
-    private var coin = 500
+    private var coin = 3
     private var costPerTime = 10
     private var resultIndex = 0
+    private lateinit var requestData : JSONObject
     private lateinit var handlerThread: HandlerThread
     private lateinit var looper: Looper
     private lateinit var handler: Handler
@@ -80,12 +71,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pref: SharePreference
     private var recordList = mutableListOf<RecordData>()
     lateinit var collectionData: CollectionData
+    lateinit var okHttp: OkHttp
+    lateinit var reponseData: JSONObject
+    lateinit var userInfo: UserInfo
     private val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN)
+    private lateinit var loadingView: View
+    private lateinit var loadingRoot: ViewGroup
     private fun startOrStop() {
         if (coin <= 0) showAlertDialog("您沒有足夠的籌碼")
         else {
-//            when (startOrStop.text) {
-//                "START" -> {
             if (!Utils.isFastDoubleClick()) {
                 coin -= costPerTime
                 coinText.text = "$coin"
@@ -93,19 +87,73 @@ class MainActivity : AppCompatActivity() {
                 recordList.add(RecordData(costPerTime, sdf.format(System.currentTimeMillis())))
                 pref.saveRecord(recordList)
                 beginTimerText.visibility = View.VISIBLE
-                startOrStop.visibility = View.GONE
+                start.visibility = View.GONE
                 showCollectionText.visibility = View.GONE
                 showCollection.visibility = View.GONE
+                showAchievement.visibility = View.GONE
+                achievementText.visibility = View.GONE
                 showRecord.hide()
                 handler.post(beginTimer)
             }
         }
-//                "STOP" -> {
-//                    finishShake()
-//                }
-//            }
+    }
 
-//        }
+    fun measureIntent(){
+        if(intent.getStringExtra("From") == "AutoLogin"){
+            loadingRoot.addView(loadingView)
+            requestData = JSONObject()
+            requestData.put("api_token", intent.getStringExtra("Token"))
+            val json = requestData.toString()
+            okHttp.request(json, "/api/autologin", ::autoLogin, OkHttp.RequestType.POST)
+        }else{
+        userInfo = Gson().fromJson(intent.getStringExtra("UserInfo"), UserInfo::class.java)
+        initUserInfo()
+        }
+    }
+
+    fun initUserInfo(){
+        supportActionBar!!.title = "${userInfo.name} 的跳跳傑特"
+        coin = userInfo.balance
+//        coin = 500
+        coinText.text = "$coin"
+    }
+
+    fun autoLogin(jsonObject: JSONObject) {
+        runOnUiThread {
+            loadingRoot.removeView(loadingView)
+            if (jsonObject.get("result") == "success") {
+                reponseData = jsonObject.get("data") as JSONObject
+                val name = reponseData.get("name") as String
+                val balance = reponseData.get("balance") as Int
+                val token = reponseData.get("api_token") as String
+                pref.saveToken(token)
+                userInfo = UserInfo(name, balance, token)
+                initUserInfo()
+            } else {
+                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+                pref.removeToken()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+
+        }
+    }
+
+    fun init(){
+
+        //取得體感(Sensor)服務使用權限
+        beginTimerText.visibility = View.GONE
+        countText.visibility = View.GONE
+        mSensorManager = this.getSystemService(SENSOR_SERVICE) as SensorManager
+        mSensor = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+        pref = SharePreference(this)
+//        coin = pref.getCoin()
+        recordList.addAll(pref.getRecord())
+        collectionData = pref.getCollection()
+//        coinText.text = "$coin"
+        objectAnimator()
+        initRunnable()
     }
 
     fun initRunnable() {
@@ -219,13 +267,14 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             countText.text = "0"
             countText.visibility = View.GONE
-
             resultDialog()
 //            startOrStop.text = "START"
             beginTimerText.visibility = View.GONE
             showCollection.visibility = View.VISIBLE
             showCollectionText.visibility = View.VISIBLE
-            startOrStop.visibility = View.VISIBLE
+            start.visibility = View.VISIBLE
+            showAchievement.visibility = View.VISIBLE
+            achievementText.visibility = View.VISIBLE
             showRecord.show()
         }
     }
@@ -244,7 +293,6 @@ class MainActivity : AppCompatActivity() {
         vidControl.isShowing
         videoView.setMediaController(vidControl)
 
-//        val index = collectionData.list.indexOf(collectionData.list.first{ it.videoId == id })
         collectionData.list[resultIndex].isUnclock = true
         pref.saveCollection(collectionData)
         val videoUri =
@@ -329,6 +377,34 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    val achievementList = mutableListOf(AchievementData("A", "a"),
+        AchievementData("B", "b"),
+        AchievementData("C", "c"),
+        AchievementData("D", "d"),
+        AchievementData("E", "e"),
+        AchievementData("F", "f"),
+        AchievementData("G", "g"),
+        AchievementData("H", "h"),
+        AchievementData("I", "i"),
+        AchievementData("J", "j"),
+        AchievementData("K", "k"),
+        AchievementData("L", "l"),
+        AchievementData("M", "m")
+        )
+
+    fun showAchievement() {
+        val view = LayoutInflater.from(this).inflate(R.layout.achievement_dialog, null)
+        view.achievementRecyclerView.layoutManager = LinearLayoutManager(this)
+        view.achievementRecyclerView.adapter = AchievementAdapter(this, achievementList)
+
+        AlertDialog.Builder(this)
+            .setTitle("成就")
+            .setView(view)
+            .setPositiveButton("OK") { dialog, which ->
+            }
+            .show()
+    }
+
     fun showVideo() {
         val view = LayoutInflater.from(this).inflate(R.layout.result_dialog, null)
         view.videoTitle.visibility = View.GONE
@@ -350,5 +426,36 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton("OK") { dialog, which -> }
             .show()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.my_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.logout) {
+            loadingRoot.addView(loadingView)
+            requestData = JSONObject()
+            requestData.put("api_token", userInfo.token)
+            val json = requestData.toString()
+            okHttp.request(json, "/api/logout", ::logout, OkHttp.RequestType.DELETE)
+        }
+        return true
+    }
+
+    fun logout(jsonObject: JSONObject){
+        runOnUiThread {
+            loadingRoot.removeView(loadingView)
+            if (jsonObject.get("result") == "success") {
+                pref.removeToken()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+
+        }
+    }
+
+
 
 }

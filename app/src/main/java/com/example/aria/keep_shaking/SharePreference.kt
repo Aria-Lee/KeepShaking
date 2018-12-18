@@ -9,6 +9,10 @@ class SharePreference(val context: Context) {
     private val pref = context.getSharedPreferences("Keep Shaking", Context.MODE_PRIVATE)
     inline fun <reified T> Gson.fromJson(json: String?) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 
+    fun saveToken(token: String){
+        pref.edit().putString("token", token).apply()
+    }
+
     fun saveCoin(coin: Int) {
         pref.edit().putInt("coin", coin).apply()
     }
@@ -59,6 +63,14 @@ class SharePreference(val context: Context) {
     fun getVideoId(name: String): Int{
         println("**************** ${context.resources.getIdentifier(name, "raw", context.packageName)}")
         return context.resources.getIdentifier(name, "raw", context.packageName)
+    }
+
+    fun getToken(): String{
+        return pref.getString("token", "")
+    }
+
+    fun removeToken(){
+        if(pref.contains("token")) pref.edit().remove("token").apply()
     }
 
 }
