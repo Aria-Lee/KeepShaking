@@ -40,7 +40,7 @@ class CollectionAdapter(val context: Context, var data: CollectionData) : Recycl
 
         @SuppressLint("SetTextI18n")
         fun bind(data: CollectionListElement) {
-            if (data.isUnclock == true) {
+            if (data.isUnclock) {
                 imageView.setImageResource(data.imageId)
                 name.text = data.name
             } else {

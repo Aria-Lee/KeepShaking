@@ -1,7 +1,6 @@
 package com.example.aria.keep_shaking
 
 import android.content.Context
-import com.google.gson.JsonObject
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -19,7 +18,7 @@ class OkHttp(val context: Context) {
     lateinit var body : RequestBody
 
 
-    fun request(dataJsonString: String?, url: String, cb: (JSONObject) -> Unit, requestType: RequestType){
+    fun request(dataString: String?, url: String, cb: (JSONObject) -> Unit, requestType: RequestType){
         val builder = Request.Builder()
                 .url(baseURL + url)
         when (requestType) {
@@ -30,13 +29,14 @@ class OkHttp(val context: Context) {
                     .build()
                 builder.headers(header)
 
-                body = RequestBody.create(JSON, dataJsonString!!)
+                body = RequestBody.create(JSON, dataString!!)
                 builder.post(body)
             }
             RequestType.GET -> {
                 val header = Headers.Builder()
                     .add("Content-Type","application/json")
                     .add("Accept","application/json")
+                    .add("Authorization", "Bearer $dataString")
                     .build()
                 builder.headers(header)
                 builder.get()
@@ -49,7 +49,7 @@ class OkHttp(val context: Context) {
                 builder.headers(header)
 
 
-                body = RequestBody.create(JSON, dataJsonString!!)
+                body = RequestBody.create(JSON, dataString!!)
                 builder.delete(body)
             }
         }

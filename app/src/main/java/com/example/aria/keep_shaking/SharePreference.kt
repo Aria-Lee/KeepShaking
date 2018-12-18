@@ -13,6 +13,11 @@ class SharePreference(val context: Context) {
         pref.edit().putString("token", token).apply()
     }
 
+    fun saveMax(max: Int){
+        println("************* saveMax ${max}")
+        pref.edit().putInt("max", max).apply()
+    }
+
     fun saveCoin(coin: Int) {
         pref.edit().putInt("coin", coin).apply()
     }
@@ -37,21 +42,26 @@ class SharePreference(val context: Context) {
     }
 
     fun getCollection(): CollectionData{
-        val data = pref.getString("collectString",null)
-        return  if(data!= null) return Gson().fromJson(data) else CollectionData(initCollection(), 0)
+        return CollectionData(initCollection(), getMax())
+    }
+
+    fun getMax(): Int{
+        println("************* getMax ${pref.getInt("max", 0)}")
+        pref.edit().putInt("max", pref.getInt("max", 0)).apply()
+        return pref.getInt("max", 0)
     }
 
     fun initCollection(): MutableList<CollectionListElement>{
         val list = mutableListOf(
-            CollectionListElement(getImageId("snail"), getVideoId("snail"),"Snail"),
-            CollectionListElement(getImageId("turtle"), getVideoId("turtle"),"Turtle"),
-            CollectionListElement(getImageId("hermit_crab"), getVideoId("hermit_crab"),"Hermit Crab"),
-            CollectionListElement(getImageId("seal"), getVideoId("seal"),"Seal"),
-            CollectionListElement(getImageId("peacock"), getVideoId("peacock"),"Peacock"),
-            CollectionListElement(getImageId("cat_from_bag"), getVideoId("cat_from_bag"),"Cat"),
-            CollectionListElement(getImageId("squirrel"), getVideoId("squirrel"),"Squirrel"),
-            CollectionListElement(getImageId("little_bird"), getVideoId("little_bird"),"Little Bird"),
-            CollectionListElement(getImageId("close_to_bird"), getVideoId("close_to_bird"),"Big Bird"))
+            CollectionListElement(17,getImageId("snail"), getVideoId("snail"),"Snail"),
+            CollectionListElement(18,getImageId("turtle"), getVideoId("turtle"),"Turtle"),
+            CollectionListElement(19,getImageId("hermit_crab"), getVideoId("hermit_crab"),"Hermit Crab"),
+            CollectionListElement(20,getImageId("seal"), getVideoId("seal"),"Seal"),
+            CollectionListElement(21,getImageId("peacock"), getVideoId("peacock"),"Peacock"),
+            CollectionListElement(22,getImageId("cat_from_bag"), getVideoId("cat_from_bag"),"Cat"),
+            CollectionListElement(23,getImageId("squirrel"), getVideoId("squirrel"),"Squirrel"),
+            CollectionListElement(24,getImageId("little_bird"), getVideoId("little_bird"),"Little Bird"),
+            CollectionListElement(25,getImageId("close_to_bird"), getVideoId("close_to_bird"),"Big Bird"))
         return list
     }
 

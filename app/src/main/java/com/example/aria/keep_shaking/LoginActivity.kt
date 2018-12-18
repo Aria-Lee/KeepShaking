@@ -33,8 +33,6 @@ class LoginActivity : AppCompatActivity() {
 //        return
         token = pref.getToken()
         checkisLogin()
-        loginEmail.clearFocus()
-        loginPassword.clearFocus()
         login.setOnClickListener(listener)
         goSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
@@ -70,9 +68,9 @@ class LoginActivity : AppCompatActivity() {
             loadingRoot.removeView(loadingView)
             if (jsonObject.get("result") == "success") {
                 reponseData = jsonObject.get("data") as JSONObject
-                val name = reponseData.get("name") as String
-                val balance = reponseData.get("balance") as Int
-                val token = reponseData.get("api_token") as String
+                val name = reponseData.getString("name")
+                val balance = reponseData.getInt("balance")
+                val token = reponseData.getString("api_token")
                 pref.saveToken(token)
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("UserInfo", Gson().toJson(UserInfo(name, balance, token)))

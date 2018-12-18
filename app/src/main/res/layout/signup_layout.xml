@@ -4,7 +4,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="#00FF99">
+                                             android:background="#33FFAA">
 
     <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
@@ -13,6 +13,8 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
             android:importantForAutofill="no"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -21,6 +23,7 @@
                 android:id="@+id/signupName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
                 android:hint="Name"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -32,6 +35,8 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
             android:importantForAutofill="no"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -40,6 +45,7 @@
                 android:id="@+id/signupEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
                 android:hint="Email"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -51,6 +57,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:importantForAutofill="no"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline3">
@@ -58,6 +66,7 @@
         <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
                 android:hint="Password" android:id="@+id/signupPassword"/>
     </android.support.design.widget.TextInputLayout>
     <Button
@@ -65,8 +74,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:backgroundTint="#FFFF77"
+            android:backgroundTint="#FFFFBB"
             android:text="Signup"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -85,6 +96,7 @@
                 android:id="@+id/signupComfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
                 android:hint="Comfirm Password"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -94,5 +106,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5"/>
+    <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp" app:srcCompat="@drawable/sheep"
+            android:id="@+id/imageView5" android:rotation="180"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="24dp"/>
 
 </android.support.constraint.ConstraintLayout>

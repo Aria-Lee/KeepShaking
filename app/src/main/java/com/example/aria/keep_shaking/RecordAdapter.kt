@@ -24,13 +24,19 @@ class RecordAdapter(val context: Context, var list: MutableList<RecordData>) :
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val typeImage = itemView.typeImage
         val cost = itemView.coin
         val costTime = itemView.recordTime
-
         @SuppressLint("SetTextI18n")
         fun bind(data: RecordData) {
-            cost.text = " - ${data.cost}"
-            costTime.text = data.time
+            when(data.gameId){
+                2 -> typeImage.setImageResource(R.drawable.sheep_puzzle)
+                3 -> typeImage.setImageResource(R.drawable.sheep_lighton)
+                4 -> typeImage.setImageResource(R.drawable.sheep)
+                5 -> typeImage.setImageResource(R.drawable.save_money)
+            }
+            cost.text = "${data.balance}"
+            costTime.text = "${data.time}"
         }
     }
 }

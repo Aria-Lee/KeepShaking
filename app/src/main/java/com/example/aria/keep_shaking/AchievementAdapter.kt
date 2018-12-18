@@ -13,23 +13,23 @@ import kotlinx.android.synthetic.main.achievement_title.view.*
 class AchievementAdapter(val context: Context, var list: MutableList<AchievementData>) :
     RecyclerView.Adapter<AchievementAdapter.ViewHolder>() {
     companion object {
-        var SELFTitle = 0
-        var SELFCONTENT = 1
-        var COMMONTITLE = 2
-        var COMMONCONTENT = 3
+//        var SELFTitle = 0
+//        var SELFCONTENT = 1
+        var COMMONTITLE = 0
+        var COMMONCONTENT = 1
 
     }
     var mode = 0
     override fun getItemViewType(position: Int): Int {
         when(position){
-            0 -> {
-                mode = SELFTitle
-            }
-            in 1..4 ->{
-                mode = SELFCONTENT
-            }
+//            0 -> {
+//                mode = SELFTitle
+//            }
+//            in 1..4 ->{
+//                mode = SELFCONTENT
+//            }
 
-            5 -> {
+            0 -> {
                 mode = COMMONTITLE
             }
 
@@ -43,13 +43,13 @@ class AchievementAdapter(val context: Context, var list: MutableList<Achievement
     override fun onCreateViewHolder(p0: ViewGroup, type: Int): ViewHolder {
         var view : View? = null
         when(type){
-            SELFTitle -> {
-                view = LayoutInflater.from(context).inflate(R.layout.achievement_title, p0, false)
-            }
-
-            SELFCONTENT -> {
-                view = LayoutInflater.from(context).inflate(R.layout.achievement, p0, false)
-            }
+//            SELFTitle -> {
+//                view = LayoutInflater.from(context).inflate(R.layout.achievement_title, p0, false)
+//            }
+//
+//            SELFCONTENT -> {
+//                view = LayoutInflater.from(context).inflate(R.layout.achievement, p0, false)
+//            }
 
             COMMONTITLE -> {
                 view = LayoutInflater.from(context).inflate(R.layout.achievement_title, p0, false)
@@ -59,7 +59,7 @@ class AchievementAdapter(val context: Context, var list: MutableList<Achievement
                 view = LayoutInflater.from(context).inflate(R.layout.achievement, p0, false)
             }
         }
-        return ViewHolder(view, type)
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -68,14 +68,14 @@ class AchievementAdapter(val context: Context, var list: MutableList<Achievement
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         when(mode){
-            SELFTitle -> p0.bindTitle("遊戲成就")
+//            SELFTitle -> p0.bindTitle("遊戲成就")
             COMMONTITLE -> p0.bindTitle("帳戶成就")
-            SELFCONTENT -> p0.bindContent(list[p1-1])
-            COMMONCONTENT -> p0.bindContent(list[p1-2])
+//            SELFCONTENT -> p0.bindContent(list[p1-1])
+            COMMONCONTENT -> p0.bindContent(list[p1-1])
         }
     }
 
-    class ViewHolder(itemView: View?, val mode: Int) : RecyclerView.ViewHolder(itemView!!) {
+    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
 //        var achievementTitle : TextView? = null
 //        var achievementName : TextView? = null
 //        var achievementContent : TextView? = null
@@ -84,8 +84,13 @@ class AchievementAdapter(val context: Context, var list: MutableList<Achievement
         fun bindContent(data: AchievementData) {
             var achievementName = itemView!!.achievementName
             var achievementContent = itemView!!.achievementContent
-            achievementName.text = data.name
-            achievementContent.text = data.content
+            if(data.isUnclock){
+                achievementName.text = data.name
+                achievementContent.text = data.content
+            }else{
+                achievementName.text = "?????"
+                achievementContent.text = "?????"
+            }
         }
 
         fun bindTitle(title: String){
