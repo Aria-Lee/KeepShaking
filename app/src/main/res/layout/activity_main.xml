@@ -11,12 +11,12 @@
             android:id="@+id/start"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/go"
 
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintStart_toEndOf="@+id/itembox"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/showCollection"/>
 
     <ImageView
             android:id="@+id/shakeImage"
@@ -25,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/sheep" android:layout_marginBottom="84dp"
+            app:srcCompat="@drawable/sheep" android:layout_marginBottom="88dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
@@ -70,22 +70,20 @@
             android:id="@+id/showRecord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_receipt_black_24dp" android:background="#00DDAA" app:backgroundTint="#00DDAA"/>
+            app:srcCompat="@drawable/ic_receipt_black_24dp" android:background="#00DDAA" app:backgroundTint="#00DDAA"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
             android:id="@+id/showCollection"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/book"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintBottom_toTopOf="@+id/showCollectionText"
+            app:layout_constraintStart_toEndOf="@+id/start" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/showAchievement"/>
     <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp" app:srcCompat="@drawable/haystack"
@@ -99,21 +97,62 @@
             android:id="@+id/showCollectionText" app:layout_constraintStart_toStartOf="@+id/showCollection"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/showCollection"
-            app:layout_constraintTop_toBottomOf="@+id/showCollection" android:layout_marginTop="2dp"/>
+            app:layout_constraintHorizontal_bias="0.357" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
             android:text="成就"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/achievementText"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@+id/showAchievement" android:layout_marginTop="2dp"
             app:layout_constraintStart_toStartOf="@+id/showAchievement"
-            app:layout_constraintEnd_toEndOf="@+id/showAchievement"/>
+            app:layout_constraintEnd_toEndOf="@+id/showAchievement" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+            android:text="商店"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/achievementText2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/store" app:layout_constraintStart_toStartOf="@+id/store"/>
+    <TextView
+            android:text="物品盒"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/achievementText3"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itembox" app:layout_constraintStart_toStartOf="@+id/itembox"
+            android:layout_marginBottom="8dp"/>
     <ImageView
-            android:layout_width="55dp"
-            android:layout_height="55dp" app:srcCompat="@drawable/achievement"
+            android:layout_width="50dp"
+            android:layout_height="50dp" app:srcCompat="@drawable/achievement"
             android:id="@+id/showAchievement"
-            app:layout_constraintTop_toBottomOf="@+id/showCollectionText"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp" android:layout_marginEnd="5dp"/>
+            app:layout_constraintBottom_toTopOf="@+id/achievementText"
+            app:layout_constraintStart_toEndOf="@+id/showCollection" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" app:srcCompat="@drawable/ic_refresh_black_24dp"
+            android:id="@+id/refreshBalance"
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2" app:layout_constraintStart_toEndOf="@+id/coinText"
+    />
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp" app:srcCompat="@drawable/store"
+            android:id="@+id/store"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/itembox"
+            app:layout_constraintBottom_toTopOf="@+id/achievementText2"/>
+    <ImageView
+            android:layout_width="52dp"
+            android:layout_height="52dp" app:srcCompat="@drawable/gift"
+            android:id="@+id/itembox"
+            app:layout_constraintBottom_toTopOf="@+id/achievementText3"
+            app:layout_constraintStart_toEndOf="@+id/store"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/start"/>
 
 </android.support.constraint.ConstraintLayout>

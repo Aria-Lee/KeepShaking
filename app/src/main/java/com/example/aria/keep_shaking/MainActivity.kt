@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.achievement_dialog.view.*
 import kotlinx.android.synthetic.main.collection_dialog.view.*
 import kotlinx.android.synthetic.main.record_dialog.view.*
 import kotlinx.android.synthetic.main.result_dialog.view.*
+import kotlinx.android.synthetic.main.store_dialog.view.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -82,15 +83,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loadingView: View
     private lateinit var loadingRoot: ViewGroup
     private fun start() {
-        if (coin <= 0) showAlertDialog("您沒有足夠的籌碼")
-        else {
             loadingRoot.addView(loadingView)
             requestData = JSONObject()
             requestData.put("api_token", userInfo.token)
             requestData.put("game_id", gameId)
             val json = requestData.toString()
             okHttp.request(json, "/api/play", ::start, OkHttp.RequestType.POST)
-        }
     }
 
     fun start(jsonObject: JSONObject) {
@@ -570,6 +568,31 @@ class MainActivity : AppCompatActivity() {
             } else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
 
         }
+    }
+
+    val decorStoreItemList = mutableListOf(ItemData(0,"蝴蝶結",0,false))
+    val backgroundStireItemList = mutableListOf(ItemData(5,"大樹",0,false))
+    fun showStore(){
+        val view = LayoutInflater.from(this).inflate(R.layout.store_dialog, null)
+        view.decorStoreRecyclerView.layoutManager = GridLayoutManager(this,5)
+        view.backStoreRecyclerView.layoutManager = GridLayoutManager(this,5)
+        val decorAdapter = StoreAdapter(this, decorStoreItemList)
+        val backAdapter = StoreAdapter(this,backgroundStireItemList)
+        decorAdapter.setOnClickItemListener(object : StoreAdapter.OnClickItemListener{
+            override fun onItemClick(index: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })
+        decorAdapter.setOnClickItemListener(object : StoreAdapter.OnClickItemListener{
+            override fun onItemClick(index: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })
+        view.decorStoreRecyclerView.adapter=decorAdapter
+        view.backStoreRecyclerView.adapter=backAdapter
+
     }
 
     override fun onBackPressed() {

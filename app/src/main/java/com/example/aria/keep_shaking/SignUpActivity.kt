@@ -29,6 +29,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     val listener = View.OnClickListener {
+        println("**************** signup")
         if (signupName.text.toString() == "" ||
             signupEmail.text.toString() == "" ||
             signupPassword.text.toString() == "" ||
