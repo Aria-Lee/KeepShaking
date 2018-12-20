@@ -42,12 +42,10 @@
             app:layout_constraintTop_toTopOf="parent" android:textSize="80sp"/>
 
 
-
     <TextView
             android:id="@+id/coinText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             android:layout_marginStart="8dp"

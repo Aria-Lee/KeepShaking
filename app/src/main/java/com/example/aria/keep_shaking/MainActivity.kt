@@ -41,21 +41,21 @@ class MainActivity : AppCompatActivity() {
         okHttp = OkHttp(this)
         loadingRoot = window.decorView as ViewGroup
         loadingView = LayoutInflater.from(this).inflate(R.layout.loading_layout, loadingRoot, false)
-        measureIntent()
-        init()
         initStoreView()
         initItemBoxView()
+        measureIntent()
+        init()
         start.setOnClickListener {
             if (!Utils.isFastDoubleClick()) start()
         }
 
 
         showRecord.setOnClickListener { if (!Utils.isFastDoubleClick()) requestRecord() }
-        showCollection.setOnClickListener { if (!Utils.isFastDoubleClick()) requestCollection() }
+        showCollection.setOnClickListener { if (!Utils.isFastDoubleClick()) showCollection() }
         showAchievement.setOnClickListener { if (!Utils.isFastDoubleClick()) requestAchievement() }
         refreshBalance.setOnClickListener { if (!Utils.isFastDoubleClick()) requestRefresh() }
-        showStore.setOnClickListener { if (!Utils.isFastDoubleClick()) requestShowStore() }
-        showItem.setOnClickListener { if (!Utils.isFastDoubleClick()) requestShowItemBox() }
+        showStore.setOnClickListener { if (!Utils.isFastDoubleClick()) showStore() }
+        showItem.setOnClickListener { if (!Utils.isFastDoubleClick()) showItemBox() }
     }
 
     private lateinit var mSensorManager: SensorManager//體感(Sensor)使用管理
@@ -122,6 +122,8 @@ class MainActivity : AppCompatActivity() {
                 showStore.visibility = View.GONE
                 showItem.visibility = View.GONE
                 achievementText.visibility = View.GONE
+                achievementText3.visibility = View.GONE
+                achievementText2.visibility = View.GONE
                 showRecord.hide()
                 handler.post(beginTimer)
                 loadingRoot.removeView(loadingView)
@@ -324,6 +326,7 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
 
             if (jsonObject.get("result") == "success") {
+                collectionData.list[resultIndex].isUnclock = true
                 countText.text = "0"
                 countText.visibility = View.GONE
                 resultDialog()
@@ -336,6 +339,8 @@ class MainActivity : AppCompatActivity() {
                 achievementText.visibility = View.VISIBLE
                 showStore.visibility = View.VISIBLE
                 showItem.visibility = View.VISIBLE
+                achievementText3.visibility = View.VISIBLE
+                achievementText2.visibility = View.VISIBLE
                 showRecord.show()
             } else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
             loadingRoot.removeView(loadingView)
@@ -439,10 +444,10 @@ class MainActivity : AppCompatActivity() {
 
     fun requestCollection() {
         loadingRoot.addView(loadingView)
-        okHttp.request(userInfo.token, "/api/achievement", ::showCollection, OkHttp.RequestType.GET)
+        okHttp.request(userInfo.token, "/api/achievement", ::initCollection, OkHttp.RequestType.GET)
     }
 
-    fun showCollection(jsonObject: JSONObject) {
+    fun initCollection(jsonObject: JSONObject) {
         runOnUiThread {
             if (jsonObject.get("result") == "success") {
                 responseArrayData = jsonObject.get("data") as JSONArray
@@ -454,33 +459,37 @@ class MainActivity : AppCompatActivity() {
                 for (i in 0 until collectionData.list.size) {
                     if (collectionData.list[i].id in idList) collectionData.list[i].isUnclock = true
                 }
-                val view = LayoutInflater.from(this).inflate(R.layout.collection_dialog, null)
-                view.collectRecyclerView.layoutManager = GridLayoutManager(this, 3)
-                val adpter = CollectionAdapter(this, collectionData)
-                adpter.setOnClickItemListener(object : CollectionAdapter.OnClickItemListener {
-                    override fun onItemClick(index: Int) {
-                        if (!isFastDoubleClick()) {
-                            resultIndex = index
-                            showVideo()
-                        }
-                    }
-                })
-                view.collectRecyclerView.adapter = adpter
-                view.maxText.text = "目前最高紀錄：${collectionData.max} 下"
-
-                val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
-                titleView.dialogTitle.text = "收藏冊"
-                titleView.setBackgroundColor(Color.rgb(255, 255, 255))
-
-                AlertDialog.Builder(this)
-                    .setTitle("收藏冊")
-                    .setView(view)
-                    .setPositiveButton("OK") { dialog, which ->
-                    }
-                    .show()
             } else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
             loadingRoot.removeView(loadingView)
         }
+
+    }
+
+    fun showCollection() {
+        val view = LayoutInflater.from(this).inflate(R.layout.collection_dialog, null)
+        view.collectRecyclerView.layoutManager = GridLayoutManager(this, 3)
+        val adpter = CollectionAdapter(this, collectionData)
+        adpter.setOnClickItemListener(object : CollectionAdapter.OnClickItemListener {
+            override fun onItemClick(index: Int) {
+                if (!isFastDoubleClick()) {
+                    resultIndex = index
+                    showVideo()
+                }
+            }
+        })
+        view.collectRecyclerView.adapter = adpter
+        view.maxText.text = "目前最高紀錄：${collectionData.max} 下"
+
+        val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+        titleView.dialogTitle.text = "收藏冊"
+        titleView.setBackgroundColor(Color.rgb(255, 255, 255))
+
+        AlertDialog.Builder(this)
+            .setTitle("收藏冊")
+            .setView(view)
+            .setPositiveButton("OK") { dialog, which ->
+            }
+            .show()
     }
 
     val achievementList = mutableListOf(
@@ -589,47 +598,47 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun requestShowStore() {
-        loadingRoot.addView(loadingView)
-        okHttp.request(userInfo.token, "/api/shop/$gameId", ::showStore, OkHttp.RequestType.GET)
-    }
+//    fun requestShowStore() {
+//        loadingRoot.addView(loadingView)
+//        okHttp.request(userInfo.token, "/api/shop/$gameId", ::showStore, OkHttp.RequestType.GET)
+//    }
 
-    fun showStore(jsonObject: JSONObject) {
-        runOnUiThread {
-            if (jsonObject.get("result") == "success") {
-                responseArrayData = jsonObject.get("data") as JSONArray
-                val idList = mutableListOf<Int>()
-                var index: Int
-                for (i in 0 until responseArrayData.length()) {
-                    responseData = responseArrayData[i] as JSONObject
-                    idList.add(responseData.getInt("item_id"))
-                }
-                for (i in 0 until idList.size) {
-                    index = itemList.indexOf(itemList.first { it.id == idList[i] })
-                    itemList[index].isBought = true
-                    itemList[index].boughtView.visibility = View.VISIBLE
-                    itemList[buyIndex].cardView.isClickable = false
-                }
-            } else {
-                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+    fun showStore() {
+//        runOnUiThread {
+//            if (jsonObject.get("result") == "success") {
+//                responseArrayData = jsonObject.get("data") as JSONArray
+//                val idList = mutableListOf<Int>()
+//                var index: Int
+//                for (i in 0 until responseArrayData.length()) {
+//                    responseData = responseArrayData[i] as JSONObject
+//                    idList.add(responseData.getInt("item_id"))
+//                }
+//                for (i in 0 until idList.size) {
+//                    index = itemList.indexOf(itemList.first { it.id == idList[i] })
+//                    itemList[index].isBought = true
+//                    itemList[index].boughtView.visibility = View.VISIBLE
+//                    itemList[buyIndex].cardView.isClickable = false
+//                }
+//            } else {
+//                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+//            }
+
+        val view = LayoutInflater.from(this).inflate(R.layout.base_dialog, null) as ViewGroup
+        view.addView(storeView)
+
+        val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+        titleView.dialogTitle.text = "商店"
+
+        AlertDialog.Builder(this, R.style.AlertDialogStyle)
+            .setCustomTitle(titleView)
+            .setView(view)
+            .setPositiveButton("OK") { dialog, which ->
             }
-
-            val view = LayoutInflater.from(this).inflate(R.layout.base_dialog, null) as ViewGroup
-            view.addView(storeView)
-
-            val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
-            titleView.dialogTitle.text = "商店"
-
-            AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setCustomTitle(titleView)
-                .setView(view)
-                .setPositiveButton("OK") { dialog, which ->
-                }
-                .setOnDismissListener { view.removeAllViews() }
-                .show()
-            loadingDialogRoot = view
-            loadingRoot.removeView(loadingView)
-        }
+            .setOnDismissListener { view.removeAllViews() }
+            .show()
+        loadingDialogRoot = view
+//            loadingRoot.removeView(loadingView)
+//        }
     }
 
     val itemList = mutableListOf<ItemData>()
@@ -750,8 +759,13 @@ class MainActivity : AppCompatActivity() {
                 responseData = jsonObject.get("data") as JSONObject
                 coinText.text = responseData.getString("balance")
                 itemList[buyIndex].boughtView.visibility = View.VISIBLE
+                itemBoxList[buyIndex].boughtView.visibility = View.GONE
                 itemList[buyIndex].isBought = true
+                itemBoxList[buyIndex].isBought = true
                 itemList[buyIndex].cardView.isClickable = false
+                if (itemBoxList[buyIndex].id in 0 until 4) {
+                    itemBoxList[buyIndex].cardView.isClickable = true
+                }
                 when (itemList[buyIndex].id) {
                     5 -> showTree.visibility = View.VISIBLE
                     6 -> showHouse.visibility = View.VISIBLE
@@ -875,65 +889,65 @@ class MainActivity : AppCompatActivity() {
         itemBoxList.forEach { item ->
             if (item.id <= 4) {
                 item.cardView.setOnClickListener {
-                    if (!Utils.isFastDoubleClick()) {
-                        println("********************8click")
+                    println("********************8click")
 
-                        itemBoxList.forEach {
-                            if (it.id == item.id) item.isUsed = !item.isUsed
-                            else it.isUsed = false
-                        }
-                        itemBoxView.tieRadioButton.isChecked = itemBoxList[0].isUsed
-                        itemBoxView.hatRadioButton.isChecked = itemBoxList[1].isUsed
-                        itemBoxView.balloonRadioButton.isChecked = itemBoxList[2].isUsed
-                        itemBoxView.sunglassesRadioButton.isChecked = itemBoxList[3].isUsed
-                        itemBoxView.sheepRadioButton.isChecked = itemBoxList[4].isUsed
-                        if (item.isUsed) {
-                            when (item.id) {
-                                0 -> jett.setImageResource(R.drawable.sheep_tie)
-                                1 -> jett.setImageResource(R.drawable.sheep_hat)
-                                2 -> jett.setImageResource(R.drawable.sheep_ballon)
-                                3 -> jett.setImageResource(R.drawable.sheep_sunglasses)
-                                4 -> jett.setImageResource(R.drawable.sheep_sheep)
-                            }
-                        } else jett.setImageResource(R.drawable.sheep)
+                    itemBoxList.forEach {
+                        if (it.id == item.id) item.isUsed = !item.isUsed
+                        else it.isUsed = false
                     }
+                    itemBoxView.tieRadioButton.isChecked = itemBoxList[0].isUsed
+                    itemBoxView.hatRadioButton.isChecked = itemBoxList[1].isUsed
+                    itemBoxView.balloonRadioButton.isChecked = itemBoxList[2].isUsed
+                    itemBoxView.sunglassesRadioButton.isChecked = itemBoxList[3].isUsed
+                    itemBoxView.sheepRadioButton.isChecked = itemBoxList[4].isUsed
+                    if (item.isUsed) {
+                        when (item.id) {
+                            0 -> jett.setImageResource(R.drawable.sheep_tie)
+                            1 -> jett.setImageResource(R.drawable.sheep_hat)
+                            2 -> jett.setImageResource(R.drawable.sheep_ballon)
+                            3 -> jett.setImageResource(R.drawable.sheep_sunglasses)
+                            4 -> jett.setImageResource(R.drawable.sheep_sheep)
+                        }
+                    } else jett.setImageResource(R.drawable.sheep)
                 }
+
             }
 
         }
     }
 
 
-    fun requestShowItemBox() {
-        loadingRoot.addView(loadingView)
-        okHttp.request(userInfo.token, "/api/shop/$gameId", ::showItemBox, OkHttp.RequestType.GET)
-    }
+//
+//    fun requestShowItemBox() {
+//        loadingRoot.addView(loadingView)
+//        okHttp.request(userInfo.token, "/api/shop/$gameId", ::showItemBox, OkHttp.RequestType.GET)
+//    }
 
-    fun showItemBox(jsonObject: JSONObject) {
-        runOnUiThread {
-            if (jsonObject.get("result") == "success") {
-                responseArrayData = jsonObject.get("data") as JSONArray
-                val idList = mutableListOf<Int>()
-                var index: Int
-                for (i in 0 until responseArrayData.length()) {
-                    responseData = responseArrayData[i] as JSONObject
-                    idList.add(responseData.getInt("item_id"))
-                }
-                for (i in 0 until idList.size) {
-                    index = itemBoxList.indexOf(itemBoxList.first { it.id == idList[i] })
-                    itemBoxList[index].isBought = true
-                    itemBoxList[index].boughtView.visibility = View.GONE
-//                    itemBoxList[index].cardView.isClickable = true
-                    if (itemBoxList[index].id in 0 until 4) {
-                        itemBoxList[index].cardView.isClickable = true
-
-                    }
-                    println("*****************itemBoxList ${itemBoxList[index].id}")
-                }
-
-            } else {
-                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
-            }
+        fun showItemBox() {
+//        runOnUiThread {
+//            if (jsonObject.get("result") == "success") {
+//                responseArrayData = jsonObject.get("data") as JSONArray
+//                val idList = mutableListOf<Int>()
+//                var index: Int
+//                for (i in 0 until responseArrayData.length()) {
+//                    responseData = responseArrayData[i] as JSONObject
+//                    idList.add(responseData.getInt("item_id"))
+//                }
+//                for (i in 0 until idList.size) {
+//                    index = itemBoxList.indexOf(itemBoxList.first { it.id == idList[i] })
+//                    itemBoxList[index].isBought = true
+//                    itemBoxList[index].boughtView.visibility = View.GONE
+////                    itemBoxList[index].cardView.isClickable = true
+//                    if (itemBoxList[index].id in 0 until 4) {
+//                        itemBoxList[index].cardView.isClickable = true
+//
+//                    }
+//                    println("*****************itemBoxList ${itemBoxList[index].id}")
+//                }
+//
+//            } else {
+//                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+//            }
 
             val view = LayoutInflater.from(this).inflate(R.layout.base_dialog, null) as ViewGroup
             view.addView(itemBoxView)
@@ -951,86 +965,91 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 .show()
-            loadingRoot.removeView(loadingView)
+//            loadingRoot.removeView(loadingView)
+//        }
+
         }
 
-    }
-
-    fun setMainView() {
-        itemBoxList.forEach {
-            when (it.id) {
-//                in 0 until 4 -> {
-//                    if (it.isUsed) {
+//    fun setMainView() {
+//        itemBoxList.forEach {
+//            when (it.id) {
+////                in 0 until 4 -> {
+////                    if (it.isUsed) {
+////                        when (it.id) {
+////                            0 -> jett.setImageResource(R.drawable.sheep_tie)
+////                            1 -> jett.setImageResource(R.drawable.sheep_hat)
+////                            2 -> jett.setImageResource(R.drawable.sheep_ballon)
+////                            3 -> jett.setImageResource(R.drawable.sheep_sunglasses)
+////                            4 -> jett.setImageResource(R.drawable.sheep_sheep)
+////                        }
+////                    }
+////                }
+//
+//                in 5 until 9 -> {
+//                    if (it.isBought) {
 //                        when (it.id) {
-//                            0 -> jett.setImageResource(R.drawable.sheep_tie)
-//                            1 -> jett.setImageResource(R.drawable.sheep_hat)
-//                            2 -> jett.setImageResource(R.drawable.sheep_ballon)
-//                            3 -> jett.setImageResource(R.drawable.sheep_sunglasses)
-//                            4 -> jett.setImageResource(R.drawable.sheep_sheep)
+//                            5 -> showTree.visibility = View.VISIBLE
+//                            6 -> showHouse.visibility = View.VISIBLE
+//                            7 -> showSnail.visibility = View.VISIBLE
+//                            8 -> showBird.visibility = View.VISIBLE
+//                            9 -> showCow.visibility = View.VISIBLE
 //                        }
 //                    }
 //                }
+//            }
+//
+//        }
+//
+//    }
 
-                in 5 until 9 -> {
-                    if (it.isBought) {
-                        when (it.id) {
+        fun initRequestItem() {
+//        println("************ ${loadingView.parent}")
+            loadingRoot.addView(loadingView)
+            okHttp.request(userInfo.token, "/api/shop/$gameId", ::initItem, OkHttp.RequestType.GET)
+        }
+
+        fun initItem(jsonObject: JSONObject) {
+            runOnUiThread {
+                if (jsonObject.get("result") == "success") {
+                    responseArrayData = jsonObject.get("data") as JSONArray
+                    val idList = mutableListOf<Int>()
+                    var index: Int
+                    for (i in 0 until responseArrayData.length()) {
+                        responseData = responseArrayData[i] as JSONObject
+                        idList.add(responseData.getInt("item_id"))
+                    }
+                    for (i in 0 until idList.size) {
+                        index = itemBoxList.indexOf(itemBoxList.first { it.id == idList[i] })
+                        itemBoxList[index].isBought = true
+                        itemList[index].isBought = true
+                        itemBoxList[index].boughtView.visibility = View.GONE
+                        itemList[index].boughtView.visibility = View.VISIBLE
+                        itemList[index].cardView.isClickable = false
+
+                        when (idList[i]) {
                             5 -> showTree.visibility = View.VISIBLE
                             6 -> showHouse.visibility = View.VISIBLE
                             7 -> showSnail.visibility = View.VISIBLE
                             8 -> showBird.visibility = View.VISIBLE
                             9 -> showCow.visibility = View.VISIBLE
                         }
+                        if (itemBoxList[index].id in 0 until 4) {
+                            itemBoxList[index].cardView.isClickable = true
+
+                        }
+
                     }
+//                setMainView()
+                } else {
+                    Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
                 }
+                loadingRoot.removeView(loadingView)
+                requestCollection()
             }
 
         }
 
-    }
 
-    fun initRequestItem() {
-//        println("************ ${loadingView.parent}")
-        loadingRoot.addView(loadingView)
-        okHttp.request(userInfo.token, "/api/shop/$gameId", ::initItem, OkHttp.RequestType.GET)
-    }
-
-    fun initItem(jsonObject: JSONObject) {
-        runOnUiThread {
-            if (jsonObject.get("result") == "success") {
-                responseArrayData = jsonObject.get("data") as JSONArray
-                val idList = mutableListOf<Int>()
-                var index: Int
-                for (i in 0 until responseArrayData.length()) {
-                    responseData = responseArrayData[i] as JSONObject
-                    idList.add(responseData.getInt("item_id"))
-                }
-                for (i in 0 until idList.size) {
-                    index = itemBoxList.indexOf(itemBoxList.first { it.id == idList[i] })
-                    itemBoxList[index].isBought = true
-                    itemBoxList[index].boughtView.visibility = View.GONE
-                    when (idList[i]) {
-                        5 -> showTree.visibility = View.VISIBLE
-                        6 -> showHouse.visibility = View.VISIBLE
-                        7 -> showSnail.visibility = View.VISIBLE
-                        8 -> showBird.visibility = View.VISIBLE
-                        9 -> showCow.visibility = View.VISIBLE
-                    }
-                    if (itemBoxList[index].id in 0 until 4) {
-                        itemBoxList[index].cardView.isClickable = true
-
-                    }
-
-                }
-                setMainView()
-            } else {
-                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
-            }
-            loadingRoot.removeView(loadingView)
+        override fun onBackPressed() {
         }
-
     }
-
-
-    override fun onBackPressed() {
-    }
-}
