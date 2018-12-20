@@ -52,7 +52,7 @@
 遊戲方式為快速並持續搖晃手機直到手機發出震動提醒遊戲結束<br>
 手機搖晃時小羊會跟著晃動跳動
 
-<img src="https://i.imgur.com/DWWRt0V.gif" width="400px"/>
+<img src="/ReadMe/20181220_105600_edited.gif" width="400px"/>
 
 ## 遊戲成就與紀錄
 #### 遊戲成就
@@ -78,11 +78,11 @@
 #### 商店購買物品
 商店可購買裝飾性物品
 
-<img src="/ReadMe/20181220_105804_edited.gif" width="400px"/>
+<img src="/ReadMe/20181220_151353_edited.gif" width="400px"/>
 
 #### 使用物品
 裝飾小羊的物品可選擇性使用 <br>
 一次限用一種小洋裝飾物<br>
 背景裝飾物在購買後會自動呈現於遊戲畫面中
 
-<img src="/ReadMe/20181220_105845_edited.gif" width="400px"/>
+<img src="/ReadMe/20181220_151218_edited.gif" width="400px"/>

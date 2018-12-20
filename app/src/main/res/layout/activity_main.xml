@@ -19,15 +19,17 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/showCollection"/>
 
     <ImageView
-            android:id="@+id/jett"
-            android:layout_width="89dp"
-            android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/sheep" android:layout_marginBottom="88dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:scaleType="fitCenter"
-            app:layout_constraintDimensionRatio="h,1:1.5"/>
+        android:id="@+id/jett"
+        android:layout_width="89dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="88dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,1:1.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/sheep" />
 
     <TextView
             android:id="@+id/countText"
@@ -143,51 +145,58 @@
             android:layout_marginBottom="2dp"/>
 
     <ImageView
-            android:id="@+id/showBird"
-            android:layout_width="99dp"
-            android:layout_height="102dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/coinText"
-            app:srcCompat="@drawable/bird" android:visibility="gone"/>
+        android:id="@+id/showBird"
+        android:layout_width="99dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="60dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bird" />
 
     <ImageView
-            android:id="@+id/showTree"
-            android:layout_width="136dp"
-            android:layout_height="172dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="60dp"
-            app:layout_constraintBottom_toTopOf="@+id/showAchievement"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/tree" android:visibility="gone"/>
+        android:id="@+id/showTree"
+        android:layout_width="136dp"
+        android:layout_height="172dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="128dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/tree" />
 
     <ImageView
-            android:id="@+id/showHouse"
-            android:layout_width="134dp"
-            android:layout_height="140dp"
-            android:layout_marginBottom="92dp"
-            app:layout_constraintBottom_toTopOf="@+id/showStore"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/house" android:visibility="gone"/>
+        android:id="@+id/showHouse"
+        android:layout_width="134dp"
+        android:layout_height="140dp"
+        android:layout_marginBottom="172dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/house" />
 
     <ImageView
-            android:id="@+id/showSnail"
-            android:layout_width="36dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="48dp"
-            app:layout_constraintBottom_toTopOf="@+id/showItem"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/small_snail" android:visibility="gone"/>
+        android:id="@+id/showSnail"
+        android:layout_width="36dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="72dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/small_snail" />
 
     <ImageView
-            android:id="@+id/showCow"
-            android:layout_width="87dp"
-            android:layout_height="95dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/showAchievement"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/cow" android:visibility="gone"/>
+        android:id="@+id/showCow"
+        android:layout_width="87dp"
+        android:layout_height="95dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="72dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/cow" />
 
     <TextView
         android:id="@+id/beginTimerText"

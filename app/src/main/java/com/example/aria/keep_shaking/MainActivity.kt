@@ -363,7 +363,7 @@ class MainActivity : AppCompatActivity() {
 
 //        collectionData.list[resultIndex].isUnclock = true
         val videoUri =
-            Uri.parse("android.resource://" + getPackageName() + "/" + collectionData.list[resultIndex].videoId)
+                Uri.parse("android.resource://" + getPackageName() + "/" + collectionData.list[resultIndex].videoId)
 
 
         videoView.setVideoURI(videoUri)
@@ -393,11 +393,11 @@ class MainActivity : AppCompatActivity() {
 
 
         AlertDialog.Builder(this)
-            .setTitle("本次結果")
-            .setView(view)
-            .setPositiveButton("OK") { dialog, which ->
-            }
-            .show()
+                .setTitle("本次結果")
+                .setView(view)
+                .setPositiveButton("OK") { dialog, which ->
+                }
+                .show()
     }
 
     fun requestRecord() {
@@ -414,12 +414,12 @@ class MainActivity : AppCompatActivity() {
                 for (i in 0 until responseArrayData.length()) {
                     responseData = responseArrayData[i] as JSONObject
                     recordList.add(
-                        RecordData(
-                            responseData.getInt("game_id"),
-                            responseData.getString("description"),
-                            responseData.getInt("amount"),
-                            responseData.getString("updated_at")
-                        )
+                            RecordData(
+                                    responseData.getInt("game_id"),
+                                    responseData.getString("description"),
+                                    responseData.getInt("amount"),
+                                    responseData.getString("updated_at")
+                            )
                     )
                 }
                 val view = LayoutInflater.from(this).inflate(R.layout.record_dialog, null)
@@ -430,11 +430,11 @@ class MainActivity : AppCompatActivity() {
                 titleView.dialogTitle.text = "消費紀錄"
                 titleView.setBackgroundColor(Color.rgb(255, 255, 255))
                 AlertDialog.Builder(this)
-                    .setCustomTitle(titleView)
-                    .setView(view)
-                    .setPositiveButton("OK") { dialog, which ->
-                    }
-                    .show()
+                        .setCustomTitle(titleView)
+                        .setView(view)
+                        .setPositiveButton("OK") { dialog, which ->
+                        }
+                        .show()
             } else {
                 Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
             }
@@ -485,23 +485,23 @@ class MainActivity : AppCompatActivity() {
         titleView.setBackgroundColor(Color.rgb(255, 255, 255))
 
         AlertDialog.Builder(this)
-            .setTitle("收藏冊")
-            .setView(view)
-            .setPositiveButton("OK") { dialog, which ->
-            }
-            .show()
+                .setTitle("收藏冊")
+                .setView(view)
+                .setPositiveButton("OK") { dialog, which ->
+                }
+                .show()
     }
 
     val achievementList = mutableListOf(
-        AchievementData(1, "試水溫", "遊玩總次數達 1 次", false),
-        AchievementData(2, "新手", "遊玩總次數達 10 次", false),
-        AchievementData(3, "駕輕就熟", "遊玩總次數達 50 次", false),
-        AchievementData(4, "老手", "遊玩總次數達 100 次", false),
-        AchievementData(5, "遊戲成癮者", "遊玩總次數達 200 次", false),
-        AchievementData(6, "低消", "儲值總金額達 50", false),
-        AchievementData(7, "半張小朋友", "儲值總金額達 500", false),
-        AchievementData(8, "好野人", "儲值總金額達 1000", false),
-        AchievementData(9, "土豪", "儲值總金額達 2000", false)
+            AchievementData(1, "試水溫", "遊玩總次數達 1 次", false),
+            AchievementData(2, "新手", "遊玩總次數達 10 次", false),
+            AchievementData(3, "駕輕就熟", "遊玩總次數達 50 次", false),
+            AchievementData(4, "老手", "遊玩總次數達 100 次", false),
+            AchievementData(5, "遊戲成癮者", "遊玩總次數達 200 次", false),
+            AchievementData(6, "低消", "儲值總金額達 50", false),
+            AchievementData(7, "半張小朋友", "儲值總金額達 500", false),
+            AchievementData(8, "好野人", "儲值總金額達 1000", false),
+            AchievementData(9, "土豪", "儲值總金額達 2000", false)
     )
 
     fun requestAchievement() {
@@ -530,11 +530,11 @@ class MainActivity : AppCompatActivity() {
                 titleView.setBackgroundColor(Color.rgb(255, 255, 255))
 
                 AlertDialog.Builder(this)
-                    .setCustomTitle(titleView)
-                    .setView(view)
-                    .setPositiveButton("OK") { dialog, which ->
-                    }
-                    .show()
+                        .setCustomTitle(titleView)
+                        .setView(view)
+                        .setPositiveButton("OK") { dialog, which ->
+                        }
+                        .show()
             } else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
             loadingRoot.removeView(loadingView)
         }
@@ -547,19 +547,19 @@ class MainActivity : AppCompatActivity() {
         setVideo(view.videoView)
 
         AlertDialog.Builder(this)
-            .setTitle("${collectionData.list[resultIndex].name}")
-            .setView(view)
-            .setPositiveButton("OK") { dialog, which ->
-            }
-            .show()
+                .setTitle("${collectionData.list[resultIndex].name}")
+                .setView(view)
+                .setPositiveButton("OK") { dialog, which ->
+                }
+                .show()
     }
 
     fun showAlertDialog(message: String) {
         AlertDialog.Builder(this)
-            .setTitle("提醒")
-            .setMessage(message)
-            .setPositiveButton("OK") { dialog, which -> }
-            .show()
+                .setTitle("提醒")
+                .setMessage(message)
+                .setPositiveButton("OK") { dialog, which -> }
+                .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -579,10 +579,10 @@ class MainActivity : AppCompatActivity() {
 
         if (item.itemId == R.id.how) {
             AlertDialog.Builder(this)
-                .setTitle("遊戲說明")
-                .setMessage("點擊下方的 GO 按鈕 \n倒數三秒後開始快速搖動你的手機直到手機震動為止！\n \n * 此遊戲有九個成就階段，每個階段成功後將自動進入下個階段 \n\n * 階段失敗時將震動提醒遊戲結束 \n\n * 遊戲結算將依達成的最高階段解鎖獎勵小短片 \n\n * 可於收集冊查看所有已獲得小短片")
-                .setPositiveButton("OK") { dialog, which -> }
-                .show()
+                    .setTitle("遊戲說明")
+                    .setMessage("點擊下方的 GO 按鈕 \n倒數三秒後開始快速搖動你的手機直到手機震動為止！\n \n * 此遊戲有九個成就階段，每個階段成功後將自動進入下個階段 \n\n * 階段失敗時將震動提醒遊戲結束 \n\n * 遊戲結算將依達成的最高階段解鎖獎勵小短片 \n\n * 可於收集冊查看所有已獲得小短片")
+                    .setPositiveButton("OK") { dialog, which -> }
+                    .show()
         }
         return true
     }
@@ -630,12 +630,12 @@ class MainActivity : AppCompatActivity() {
         titleView.dialogTitle.text = "商店"
 
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
-            .setCustomTitle(titleView)
-            .setView(view)
-            .setPositiveButton("OK") { dialog, which ->
-            }
-            .setOnDismissListener { view.removeAllViews() }
-            .show()
+                .setCustomTitle(titleView)
+                .setView(view)
+                .setPositiveButton("OK") { dialog, which ->
+                }
+                .setOnDismissListener { view.removeAllViews() }
+                .show()
         loadingDialogRoot = view
 //            loadingRoot.removeView(loadingView)
 //        }
@@ -646,88 +646,88 @@ class MainActivity : AppCompatActivity() {
     fun initStoreView() {
         storeView = LayoutInflater.from(this).inflate(R.layout.store_dialog, null)
         itemList.addAll(
-            mutableListOf(
-                ItemData(
-                    0,
-                    storeView.tieCard,
-                    storeView.tieHasBought,
-                    storeView.tiePrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    1,
-                    storeView.hatCard,
-                    storeView.hatHasBought,
-                    storeView.hatPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    2,
-                    storeView.balloonCard,
-                    storeView.balloonHasBought,
-                    storeView.balloonPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    3,
-                    storeView.sunglassesCard,
-                    storeView.sunglassesHasBought,
-                    storeView.sunglassesPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    4,
-                    storeView.sheepCard,
-                    storeView.sheepHasBought,
-                    storeView.sheepPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    5,
-                    storeView.treeCard,
-                    storeView.treeHasBought,
-                    storeView.treePrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    6,
-                    storeView.houseCard,
-                    storeView.houseHasBought,
-                    storeView.housePrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    7,
-                    storeView.snailCard,
-                    storeView.snailHasBought,
-                    storeView.snailPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    8,
-                    storeView.birdCard,
-                    storeView.birdHasBought,
-                    storeView.birdPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    9,
-                    storeView.cowCard,
-                    storeView.cowHasBought,
-                    storeView.cowPrice.text.toString().toInt(),
-                    false,
-                    false
+                mutableListOf(
+                        ItemData(
+                                0,
+                                storeView.tieCard,
+                                storeView.tieHasBought,
+                                storeView.tiePrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                1,
+                                storeView.hatCard,
+                                storeView.hatHasBought,
+                                storeView.hatPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                2,
+                                storeView.balloonCard,
+                                storeView.balloonHasBought,
+                                storeView.balloonPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                3,
+                                storeView.sunglassesCard,
+                                storeView.sunglassesHasBought,
+                                storeView.sunglassesPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                4,
+                                storeView.sheepCard,
+                                storeView.sheepHasBought,
+                                storeView.sheepPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                5,
+                                storeView.treeCard,
+                                storeView.treeHasBought,
+                                storeView.treePrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                6,
+                                storeView.houseCard,
+                                storeView.houseHasBought,
+                                storeView.housePrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                7,
+                                storeView.snailCard,
+                                storeView.snailHasBought,
+                                storeView.snailPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                8,
+                                storeView.birdCard,
+                                storeView.birdHasBought,
+                                storeView.birdPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                9,
+                                storeView.cowCard,
+                                storeView.cowHasBought,
+                                storeView.cowPrice.text.toString().toInt(),
+                                false,
+                                false
+                        )
                 )
-            )
         )
 
         itemList.forEach { item ->
@@ -763,16 +763,16 @@ class MainActivity : AppCompatActivity() {
                 itemList[buyIndex].isBought = true
                 itemBoxList[buyIndex].isBought = true
                 itemList[buyIndex].cardView.isClickable = false
-                if (itemBoxList[buyIndex].id in 0 until 4) {
-                    itemBoxList[buyIndex].cardView.isClickable = true
-                }
-                when (itemList[buyIndex].id) {
-                    5 -> showTree.visibility = View.VISIBLE
-                    6 -> showHouse.visibility = View.VISIBLE
-                    7 -> showSnail.visibility = View.VISIBLE
-                    8 -> showBird.visibility = View.VISIBLE
-                    9 -> showCow.visibility = View.VISIBLE
-                }
+//                if (itemBoxList[buyIndex].id in 0 until 4) {
+                itemBoxList[buyIndex].cardView.isClickable = true
+//                }
+//                when (itemList[buyIndex].id) {
+//                    5 -> showTree.visibility = View.VISIBLE
+//                    6 -> showHouse.visibility = View.VISIBLE
+//                    7 -> showSnail.visibility = View.VISIBLE
+//                    8 -> showBird.visibility = View.VISIBLE
+//                    9 -> showCow.visibility = View.VISIBLE
+//                }
             } else {
                 Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
             }
@@ -802,118 +802,125 @@ class MainActivity : AppCompatActivity() {
     fun initItemBoxView() {
         itemBoxView = LayoutInflater.from(this).inflate(R.layout.itembox_dialog, null)
         itemBoxList.addAll(
-            mutableListOf(
-                ItemData(
-                    0,
-                    itemBoxView.boxtieCard,
-                    itemBoxView.boxtieHasBought,
-                    storeView.tiePrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    1,
-                    itemBoxView.boxhatCard,
-                    itemBoxView.boxhatHasBought,
-                    storeView.hatPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    2,
-                    itemBoxView.boxballoonCard,
-                    itemBoxView.boxballonHasBought,
-                    storeView.balloonPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    3,
-                    itemBoxView.boxsunglassesCard,
-                    itemBoxView.boxsunglassesHasBought,
-                    storeView.sunglassesPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    4,
-                    itemBoxView.boxsheepCard,
-                    itemBoxView.boxsheepHasBought,
-                    storeView.sheepPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    5,
-                    itemBoxView.boxtreeCard,
-                    itemBoxView.boxtreeHasBought,
-                    storeView.treePrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    6,
-                    itemBoxView.boxhouseCard,
-                    itemBoxView.boxhouseHasBought,
-                    storeView.housePrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    7,
-                    itemBoxView.boxsnailCard,
-                    itemBoxView.boxsnailHasBought,
-                    storeView.snailPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    8,
-                    itemBoxView.boxbirdCard,
-                    itemBoxView.boxbirdHasBought,
-                    storeView.birdPrice.text.toString().toInt(),
-                    false,
-                    false
-                ),
-                ItemData(
-                    9,
-                    itemBoxView.boxcowCard,
-                    itemBoxView.boxcowHasBought,
-                    storeView.cowPrice.text.toString().toInt(),
-                    false,
-                    false
+                mutableListOf(
+                        ItemData(
+                                0,
+                                itemBoxView.boxtieCard,
+                                itemBoxView.boxtieHasBought,
+                                storeView.tiePrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                1,
+                                itemBoxView.boxhatCard,
+                                itemBoxView.boxhatHasBought,
+                                storeView.hatPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                2,
+                                itemBoxView.boxballoonCard,
+                                itemBoxView.boxballonHasBought,
+                                storeView.balloonPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                3,
+                                itemBoxView.boxsunglassesCard,
+                                itemBoxView.boxsunglassesHasBought,
+                                storeView.sunglassesPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                4,
+                                itemBoxView.boxsheepCard,
+                                itemBoxView.boxsheepHasBought,
+                                storeView.sheepPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                5,
+                                itemBoxView.boxtreeCard,
+                                itemBoxView.boxtreeHasBought,
+                                storeView.treePrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                6,
+                                itemBoxView.boxhouseCard,
+                                itemBoxView.boxhouseHasBought,
+                                storeView.housePrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                7,
+                                itemBoxView.boxsnailCard,
+                                itemBoxView.boxsnailHasBought,
+                                storeView.snailPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                8,
+                                itemBoxView.boxbirdCard,
+                                itemBoxView.boxbirdHasBought,
+                                storeView.birdPrice.text.toString().toInt(),
+                                false,
+                                false
+                        ),
+                        ItemData(
+                                9,
+                                itemBoxView.boxcowCard,
+                                itemBoxView.boxcowHasBought,
+                                storeView.cowPrice.text.toString().toInt(),
+                                false,
+                                false
+                        )
                 )
-            )
         )
 
-        itemBoxList.forEach { item ->
-            if (item.id <= 4) {
-                item.cardView.setOnClickListener {
-                    println("********************8click")
+        itemBoxView.treecheckBox.isChecked = itemBoxList[5].isUsed
+        itemBoxView.housecheckBox.isChecked = itemBoxList[6].isUsed
+        itemBoxView.snailcheckBox.isChecked = itemBoxList[7].isUsed
+        itemBoxView.birdcheckBox.isChecked = itemBoxList[8].isUsed
+        itemBoxView.cowcheckBox.isChecked = itemBoxList[9].isUsed
 
-                    itemBoxList.forEach {
-                        if (it.id == item.id) item.isUsed = !item.isUsed
-                        else it.isUsed = false
-                    }
-                    itemBoxView.tieRadioButton.isChecked = itemBoxList[0].isUsed
-                    itemBoxView.hatRadioButton.isChecked = itemBoxList[1].isUsed
-                    itemBoxView.balloonRadioButton.isChecked = itemBoxList[2].isUsed
-                    itemBoxView.sunglassesRadioButton.isChecked = itemBoxList[3].isUsed
-                    itemBoxView.sheepRadioButton.isChecked = itemBoxList[4].isUsed
-                    if (item.isUsed) {
-                        when (item.id) {
-                            0 -> jett.setImageResource(R.drawable.sheep_tie)
-                            1 -> jett.setImageResource(R.drawable.sheep_hat)
-                            2 -> jett.setImageResource(R.drawable.sheep_ballon)
-                            3 -> jett.setImageResource(R.drawable.sheep_sunglasses)
-                            4 -> jett.setImageResource(R.drawable.sheep_sheep)
-                        }
-                    } else jett.setImageResource(R.drawable.sheep)
+        itemBoxList.take(5).forEach { item ->
+            item.cardView.setOnClickListener {
+                println("********************8click")
+
+                itemBoxList.take(5).forEach {
+                    if (it.id == item.id) item.isUsed = !item.isUsed
+                    else it.isUsed = false
                 }
+                itemBoxView.tieRadioButton.isChecked = itemBoxList[0].isUsed
+                itemBoxView.hatRadioButton.isChecked = itemBoxList[1].isUsed
+                itemBoxView.balloonRadioButton.isChecked = itemBoxList[2].isUsed
+                itemBoxView.sunglassesRadioButton.isChecked = itemBoxList[3].isUsed
+                itemBoxView.sheepRadioButton.isChecked = itemBoxList[4].isUsed
 
             }
-
         }
+        itemBoxList.takeLast(5).forEach { item ->
+            item.cardView.setOnClickListener {
+                item.isUsed = !item.isUsed
+                when (item.id) {
+                    5 -> itemBoxView.treecheckBox.isChecked = item.isUsed
+                    6 -> itemBoxView.housecheckBox.isChecked = item.isUsed
+                    7 -> itemBoxView.snailcheckBox.isChecked = item.isUsed
+                    8 -> itemBoxView.birdcheckBox.isChecked = item.isUsed
+                    9 -> itemBoxView.cowcheckBox.isChecked = item.isUsed
+                }
+            }
+        }
+
     }
 
 
@@ -923,7 +930,7 @@ class MainActivity : AppCompatActivity() {
 //        okHttp.request(userInfo.token, "/api/shop/$gameId", ::showItemBox, OkHttp.RequestType.GET)
 //    }
 
-        fun showItemBox() {
+    fun showItemBox() {
 //        runOnUiThread {
 //            if (jsonObject.get("result") == "success") {
 //                responseArrayData = jsonObject.get("data") as JSONArray
@@ -949,13 +956,13 @@ class MainActivity : AppCompatActivity() {
 //                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
 //            }
 
-            val view = LayoutInflater.from(this).inflate(R.layout.base_dialog, null) as ViewGroup
-            view.addView(itemBoxView)
+        val view = LayoutInflater.from(this).inflate(R.layout.base_dialog, null) as ViewGroup
+        view.addView(itemBoxView)
 
-            val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
-            titleView.dialogTitle.text = "物品盒"
+        val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+        titleView.dialogTitle.text = "物品盒"
 
-            AlertDialog.Builder(this, R.style.AlertDialogStyle)
+        AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setCustomTitle(titleView)
                 .setView(view)
                 .setPositiveButton("OK") { dialog, which ->
@@ -963,12 +970,47 @@ class MainActivity : AppCompatActivity() {
                 .setOnDismissListener {
                     view.removeAllViews()
 
+                    if (itemBoxList.filter { it.isUsed == true }.size == 0) jett.setImageResource(R.drawable.sheep)
+                    else {
+                        itemBoxList.take(5).forEach {
+                            if (it.isUsed) {
+                                when (it.id) {
+                                    0 -> jett.setImageResource(R.drawable.sheep_tie)
+                                    1 -> jett.setImageResource(R.drawable.sheep_hat)
+                                    2 -> jett.setImageResource(R.drawable.sheep_ballon)
+                                    3 -> jett.setImageResource(R.drawable.sheep_sunglasses)
+                                    4 -> jett.setImageResource(R.drawable.sheep_sheep)
+                                }
+                            }
+                        }
+                    }
+
+
+                    itemBoxList.takeLast(5).forEach {
+                        if (it.isUsed) {
+                            when (it.id) {
+                                5 -> showTree.visibility = View.VISIBLE
+                                6 -> showHouse.visibility = View.VISIBLE
+                                7 -> showSnail.visibility = View.VISIBLE
+                                8 -> showBird.visibility = View.VISIBLE
+                                9 -> showCow.visibility = View.VISIBLE
+                            }
+                        } else {
+                            when (it.id) {
+                                5 -> showTree.visibility = View.GONE
+                                6 -> showHouse.visibility = View.GONE
+                                7 -> showSnail.visibility = View.GONE
+                                8 -> showBird.visibility = View.GONE
+                                9 -> showCow.visibility = View.GONE
+                            }
+                        }
+                    }
                 }
                 .show()
 //            loadingRoot.removeView(loadingView)
 //        }
 
-        }
+    }
 
 //    fun setMainView() {
 //        itemBoxList.forEach {
@@ -1002,54 +1044,54 @@ class MainActivity : AppCompatActivity() {
 //
 //    }
 
-        fun initRequestItem() {
+    fun initRequestItem() {
 //        println("************ ${loadingView.parent}")
-            loadingRoot.addView(loadingView)
-            okHttp.request(userInfo.token, "/api/shop/$gameId", ::initItem, OkHttp.RequestType.GET)
-        }
-
-        fun initItem(jsonObject: JSONObject) {
-            runOnUiThread {
-                if (jsonObject.get("result") == "success") {
-                    responseArrayData = jsonObject.get("data") as JSONArray
-                    val idList = mutableListOf<Int>()
-                    var index: Int
-                    for (i in 0 until responseArrayData.length()) {
-                        responseData = responseArrayData[i] as JSONObject
-                        idList.add(responseData.getInt("item_id"))
-                    }
-                    for (i in 0 until idList.size) {
-                        index = itemBoxList.indexOf(itemBoxList.first { it.id == idList[i] })
-                        itemBoxList[index].isBought = true
-                        itemList[index].isBought = true
-                        itemBoxList[index].boughtView.visibility = View.GONE
-                        itemList[index].boughtView.visibility = View.VISIBLE
-                        itemList[index].cardView.isClickable = false
-
-                        when (idList[i]) {
-                            5 -> showTree.visibility = View.VISIBLE
-                            6 -> showHouse.visibility = View.VISIBLE
-                            7 -> showSnail.visibility = View.VISIBLE
-                            8 -> showBird.visibility = View.VISIBLE
-                            9 -> showCow.visibility = View.VISIBLE
-                        }
-                        if (itemBoxList[index].id in 0 until 4) {
-                            itemBoxList[index].cardView.isClickable = true
-
-                        }
-
-                    }
-//                setMainView()
-                } else {
-                    Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
-                }
-                loadingRoot.removeView(loadingView)
-                requestCollection()
-            }
-
-        }
-
-
-        override fun onBackPressed() {
-        }
+        loadingRoot.addView(loadingView)
+        okHttp.request(userInfo.token, "/api/shop/$gameId", ::initItem, OkHttp.RequestType.GET)
     }
+
+    fun initItem(jsonObject: JSONObject) {
+        runOnUiThread {
+            if (jsonObject.get("result") == "success") {
+                responseArrayData = jsonObject.get("data") as JSONArray
+                val idList = mutableListOf<Int>()
+                var index: Int
+                for (i in 0 until responseArrayData.length()) {
+                    responseData = responseArrayData[i] as JSONObject
+                    idList.add(responseData.getInt("item_id"))
+                }
+                for (i in 0 until idList.size) {
+                    index = itemBoxList.indexOf(itemBoxList.first { it.id == idList[i] })
+                    itemBoxList[index].isBought = true
+                    itemList[index].isBought = true
+                    itemBoxList[index].boughtView.visibility = View.GONE
+                    itemList[index].boughtView.visibility = View.VISIBLE
+                    itemList[index].cardView.isClickable = false
+
+//                    when (idList[i]) {
+//                        5 -> showTree.visibility = View.VISIBLE
+//                        6 -> showHouse.visibility = View.VISIBLE
+//                        7 -> showSnail.visibility = View.VISIBLE
+//                        8 -> showBird.visibility = View.VISIBLE
+//                        9 -> showCow.visibility = View.VISIBLE
+//                    }
+//                    if (itemBoxList[index].id in 0 until 4) {
+                    itemBoxList[index].cardView.isClickable = true
+
+//                    }
+
+                }
+//                setMainView()
+            } else {
+                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            }
+            loadingRoot.removeView(loadingView)
+            requestCollection()
+        }
+
+    }
+
+
+    override fun onBackPressed() {
+    }
+}
