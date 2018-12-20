@@ -7,29 +7,46 @@
     android:background="@drawable/woodbackground">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cowCard"
+        android:id="@+id/boxcowCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/birdCard"
+        android:clickable="false"
+
+        app:layout_constraintBottom_toBottomOf="@+id/boxbirdCard"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toTopOf="@+id/birdCard">
+        app:layout_constraintTop_toTopOf="@+id/boxbirdCard">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="2dp"
+                android:text="小牛"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/cowHasBought"
+                android:id="@+id/boxcowHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="1"
-                    android:text="已購買"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -56,78 +73,73 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/cowPrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView15"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/cow" />
 
-            <TextView
-                android:id="@+id/cowPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="50"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/id9"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/cowPrice"
-                app:layout_constraintEnd_toStartOf="@+id/cowPrice"
-                app:layout_constraintTop_toTopOf="@+id/cowPrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/snailCard"
+        android:id="@+id/boxsnailCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/treeCard"
+        android:clickable="false"
+
+        app:layout_constraintBottom_toBottomOf="@+id/boxtreeCard"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/treeCard">
+        app:layout_constraintTop_toTopOf="@+id/boxtreeCard">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/snailHasBought"
+                android:id="@+id/boxsnailHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/snailTextView2"
+                    android:id="@+id/cowTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:text="已購買"
+                    android:alpha="1"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="2dp"
+                android:text="蝸牛"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/snail"
@@ -137,78 +149,71 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/snailPrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView14"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/small_snail" />
 
-            <TextView
-                android:id="@+id/snailPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="20"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/id7"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/snailPrice"
-                app:layout_constraintEnd_toStartOf="@+id/snailPrice"
-                app:layout_constraintTop_toTopOf="@+id/snailPrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/houseCard"
+        android:id="@+id/boxhouseCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/treeCard"
+        android:clickable="false"
+
+        app:layout_constraintBottom_toBottomOf="@+id/boxtreeCard"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/treeCard">
+        app:layout_constraintTop_toTopOf="@+id/boxtreeCard">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/houseHasBought"
+                android:id="@+id/boxhouseHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/houseTextView2"
+                    android:id="@+id/cowTextView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:text="已購買"
+                    android:alpha="1"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="2dp"
+                android:text="小屋"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/house"
@@ -218,81 +223,74 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/housePrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView13"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/house" />
 
-            <TextView
-                android:id="@+id/housePrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="20"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/id6"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/housePrice"
-                app:layout_constraintEnd_toStartOf="@+id/housePrice"
-                app:layout_constraintTop_toTopOf="@+id/housePrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/birdCard"
+        android:id="@+id/boxbirdCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:clickable="false"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/treeCard">
+        app:layout_constraintTop_toBottomOf="@+id/boxtreeCard">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/birdHasBought"
+                android:id="@+id/boxbirdHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/birdTextView2"
+                    android:id="@+id/cowTextView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:text="已購買"
+                    android:alpha="1"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="2dp"
+                android:text="小鳥"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/bird"
@@ -302,52 +300,32 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/birdPrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/bird" />
 
-            <TextView
-                android:id="@+id/birdPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="40"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/id8"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/birdPrice"
-                app:layout_constraintEnd_toStartOf="@+id/birdPrice"
-                app:layout_constraintTop_toTopOf="@+id/birdPrice"
-                app:srcCompat="@drawable/grass" />
+
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/storeDecorTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#FFCCCC"
-        android:gravity="center"
-        android:paddingTop="1dp"
-        android:paddingBottom="1dp"
-        android:text="裝飾小羊"
-        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/storeDecorTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#FFCCCC"
+            android:gravity="center"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:text="裝飾小羊"
+            android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/storeBackTitle"
@@ -363,7 +341,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sunglassesCard" />
+        app:layout_constraintTop_toBottomOf="@+id/boxsunglassesCard" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
@@ -387,12 +365,14 @@
         app:layout_constraintGuide_percent="0.33" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/tieCard"
+        android:id="@+id/boxtieCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:clickable="false"
+
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.5"
@@ -404,20 +384,47 @@
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/tieHasBought"
+                android:id="@+id/boxtieHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/tieTextView2"
+                    android:id="@+id/cowTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="1"
+                    android:text="尚未購買"
+                    android:textColor="@android:color/background_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/boxballoonHasBought"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:alpha="0.5"
+                android:background="#DDDDDD"
+                android:elevation="10dp"
+                android:visibility="gone"
+                android:clickable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/balloonTextView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.7"
@@ -438,77 +445,106 @@
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
                 android:contentDescription="TODO"
-                app:layout_constraintBottom_toTopOf="@+id/tiePrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/tie" />
 
+            <RadioButton
+                android:id="@+id/tieRadioButton"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/radiobutton"
+                android:button="@null"
+                android:clickable="false"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintEnd_toStartOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/textView5" />
+
             <TextView
-                android:id="@+id/tiePrice"
+                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="19dp"
                 android:layout_marginBottom="2dp"
-                android:text="10"
+                android:text="蝴蝶結"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/id0"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/tiePrice"
-                app:layout_constraintEnd_toStartOf="@+id/tiePrice"
-                app:layout_constraintTop_toTopOf="@+id/tiePrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/hatCard"
+        android:id="@+id/boxhatCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:clickable="false"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/tieCard">
+        app:layout_constraintTop_toTopOf="@+id/boxtieCard">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/hatHasBought"
+                android:id="@+id/boxhatHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/hatTextView2"
+                    android:id="@+id/cowTextView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:text="已購買"
+                    android:alpha="1"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginBottom="2dp"
+                android:text="帽子"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RadioButton
+                android:id="@+id/hatRadioButton"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/radiobutton"
+                android:button="@null"
+                android:clickable="false"
+                app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                app:layout_constraintEnd_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toTopOf="@+id/textView7" />
 
             <ImageView
                 android:id="@+id/hat"
@@ -518,77 +554,83 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/hatPrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/hat" />
 
-            <TextView
-                android:id="@+id/hatPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="20"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/id1"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/hatPrice"
-                app:layout_constraintEnd_toStartOf="@+id/hatPrice"
-                app:layout_constraintTop_toTopOf="@+id/hatPrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/balloonCard"
+        android:id="@+id/boxballoonCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
+        android:clickable="false"
+
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/tieCard">
+        app:layout_constraintTop_toTopOf="@+id/boxtieCard">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/balloonHasBought"
+                android:id="@+id/boxballonHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/balloonTextView2"
+                    android:id="@+id/cowTextView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:text="已購買"
+                    android:alpha="1"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginBottom="2dp"
+                android:text="氣球"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RadioButton
+                android:id="@+id/balloonRadioButton"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/radiobutton"
+                android:button="@null"
+                android:clickable="false"
+
+                app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                app:layout_constraintEnd_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toTopOf="@+id/textView8" />
 
             <ImageView
                 android:id="@+id/balloon"
@@ -598,34 +640,12 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/balloonPrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/balloon" />
 
-            <TextView
-                android:id="@+id/balloonPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="30"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/id2"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/balloonPrice"
-                app:layout_constraintEnd_toStartOf="@+id/balloonPrice"
-                app:layout_constraintTop_toTopOf="@+id/balloonPrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
@@ -637,47 +657,75 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/sunglassesCard"
+        android:id="@+id/boxsunglassesCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:clickable="false"
+
         app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/sheepCard"
+        app:layout_constraintEnd_toStartOf="@+id/boxsheepCard"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tieCard">
+        app:layout_constraintTop_toBottomOf="@+id/boxtieCard">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/sunglassesHasBought"
+                android:id="@+id/boxsunglassesHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/sunglassesTextView2"
+                    android:id="@+id/cowTextView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:text="已購買"
+                    android:alpha="1"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginBottom="2dp"
+                android:text="墨鏡"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RadioButton
+                android:id="@+id/sunglassesRadioButton"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/radiobutton"
+                android:button="@null"
+                android:clickable="false"
+
+                app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                app:layout_constraintEnd_toStartOf="@+id/textView10"
+                app:layout_constraintTop_toTopOf="@+id/textView10" />
 
             <ImageView
                 android:id="@+id/sunglasses"
@@ -687,78 +735,83 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/sunglassesPrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/sunglasses" />
 
-            <TextView
-                android:id="@+id/sunglassesPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="40"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/id3"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/sunglassesPrice"
-                app:layout_constraintEnd_toStartOf="@+id/sunglassesPrice"
-                app:layout_constraintTop_toTopOf="@+id/sunglassesPrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/sheepCard"
+        android:id="@+id/boxsheepCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/sunglassesCard"
+        android:clickable="false"
+
+        app:layout_constraintBottom_toBottomOf="@+id/boxsunglassesCard"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/sunglassesCard"
-        app:layout_constraintTop_toTopOf="@+id/sunglassesCard">
+        app:layout_constraintStart_toEndOf="@+id/boxsunglassesCard"
+        app:layout_constraintTop_toTopOf="@+id/boxsunglassesCard">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/sheepHasBought"
+                android:id="@+id/boxsheepHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/sheepTextView2"
+                    android:id="@+id/cowTextView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:text="已購買"
+                    android:alpha="1"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginBottom="2dp"
+                android:text="小羊"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RadioButton
+                android:id="@+id/sheepRadioButton"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/radiobutton"
+                android:button="@null"
+                android:clickable="false"
+                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintEnd_toStartOf="@+id/textView9"
+                app:layout_constraintTop_toTopOf="@+id/textView9" />
 
             <ImageView
                 android:id="@+id/sheep"
@@ -768,44 +821,24 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/sheepPrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/sheep" />
 
-            <TextView
-                android:id="@+id/sheepPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="50"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/id4"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/sheepPrice"
-                app:layout_constraintEnd_toStartOf="@+id/sheepPrice"
-                app:layout_constraintTop_toTopOf="@+id/sheepPrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/treeCard"
+        android:id="@+id/boxtreeCard"
         android:layout_width="70dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:clickable="false"
+
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.5"
@@ -817,30 +850,44 @@
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/treeHasBought"
+                android:id="@+id/boxtreeHasBought"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:alpha="0.5"
                 android:background="#DDDDDD"
                 android:elevation="10dp"
-                android:visibility="gone"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/treeTextView2"
+                    android:id="@+id/cowTextView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.7"
-                    android:text="已購買"
+                    android:alpha="1"
+                    android:text="尚未購買"
                     android:textColor="@android:color/background_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="2dp"
+                android:text="大樹"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/tree"
@@ -850,34 +897,12 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/treePrice"
+                app:layout_constraintBottom_toTopOf="@+id/textView11"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/tree" />
 
-            <TextView
-                android:id="@+id/treePrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:text="10"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/id5"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="2dp"
-                android:rotation="20"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/treePrice"
-                app:layout_constraintEnd_toStartOf="@+id/treePrice"
-                app:layout_constraintTop_toTopOf="@+id/treePrice"
-                app:srcCompat="@drawable/grass" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 

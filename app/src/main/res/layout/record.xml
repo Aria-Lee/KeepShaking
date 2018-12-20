@@ -18,15 +18,27 @@
             android:id="@+id/coin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:gravity="center"
             android:text="TextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Menu"
             app:layout_constraintEnd_toStartOf="@+id/recordTime"
             app:layout_constraintBottom_toBottomOf="@+id/typeImage"
-            app:layout_constraintTop_toTopOf="@+id/typeImage" app:layout_constraintStart_toEndOf="@+id/typeImage"
-            android:layout_marginStart="8dp"/>
+            app:layout_constraintTop_toTopOf="@+id/typeImage"
+    />
 
+    <TextView
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+            app:layout_constraintEnd_toStartOf="@+id/coin"
+            app:layout_constraintBottom_toBottomOf="@+id/typeImage"
+            app:layout_constraintTop_toTopOf="@+id/typeImage"
+            app:layout_constraintStart_toEndOf="@+id/typeImage" android:layout_marginStart="8dp"/>
     <TextView
             android:id="@+id/recordTime"
             android:layout_width="wrap_content"

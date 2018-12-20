@@ -2,6 +2,7 @@ package com.example.aria.keep_shaking
 
 import android.animation.ObjectAnimator
 import android.content.Intent
+import android.graphics.Color
 import android.hardware.Sensor
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,6 +22,8 @@ import com.example.aria.keep_shaking.Utils.Companion.isFastDoubleClick
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.achievement_dialog.view.*
 import kotlinx.android.synthetic.main.collection_dialog.view.*
+import kotlinx.android.synthetic.main.dialog_title.view.*
+import kotlinx.android.synthetic.main.itembox_dialog.view.*
 import kotlinx.android.synthetic.main.record_dialog.view.*
 import kotlinx.android.synthetic.main.result_dialog.view.*
 import kotlinx.android.synthetic.main.store_dialog.view.*
@@ -40,12 +43,19 @@ class MainActivity : AppCompatActivity() {
         loadingView = LayoutInflater.from(this).inflate(R.layout.loading_layout, loadingRoot, false)
         measureIntent()
         init()
+        initStoreView()
+        initItemBoxView()
         start.setOnClickListener {
             if (!Utils.isFastDoubleClick()) start()
         }
+
+
         showRecord.setOnClickListener { if (!Utils.isFastDoubleClick()) requestRecord() }
         showCollection.setOnClickListener { if (!Utils.isFastDoubleClick()) requestCollection() }
         showAchievement.setOnClickListener { if (!Utils.isFastDoubleClick()) requestAchievement() }
+        refreshBalance.setOnClickListener { if (!Utils.isFastDoubleClick()) requestRefresh() }
+        showStore.setOnClickListener { if (!Utils.isFastDoubleClick()) requestShowStore() }
+        showItem.setOnClickListener { if (!Utils.isFastDoubleClick()) requestShowItemBox() }
     }
 
     private lateinit var mSensorManager: SensorManager//體感(Sensor)使用管理
@@ -60,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     private var gaolAddNum = 30
     private var perTime: Long = 3000
     private var beginNum = 3
-    private var coin = 3
+    //    private var coin = 3
     private var costPerTime = 10
     private var resultIndex = 0
     private val gameId = 4
@@ -72,32 +82,34 @@ class MainActivity : AppCompatActivity() {
     private lateinit var shakeTimer: Runnable
     private lateinit var vibrator: Vibrator
     private lateinit var pref: SharePreference
+    private var buyItemId = 0
     private var reachLevel = 0
     private var recordList = mutableListOf<RecordData>()
     lateinit var collectionData: CollectionData
     lateinit var okHttp: OkHttp
-    lateinit var reponseData: JSONObject
-    lateinit var reponseArrayData: JSONArray
+    lateinit var responseData: JSONObject
+    lateinit var responseArrayData: JSONArray
     lateinit var userInfo: UserInfo
     private val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN)
     private lateinit var loadingView: View
     private lateinit var loadingRoot: ViewGroup
     private fun start() {
-            loadingRoot.addView(loadingView)
-            requestData = JSONObject()
-            requestData.put("api_token", userInfo.token)
-            requestData.put("game_id", gameId)
-            val json = requestData.toString()
-            okHttp.request(json, "/api/play", ::start, OkHttp.RequestType.POST)
+        loadingRoot.addView(loadingView)
+        requestData = JSONObject()
+        requestData.put("api_token", userInfo.token)
+        requestData.put("game_id", gameId)
+        val json = requestData.toString()
+        okHttp.request(json, "/api/play", ::start, OkHttp.RequestType.POST)
     }
 
     fun start(jsonObject: JSONObject) {
         runOnUiThread {
-            loadingRoot.removeView(loadingView)
+
             if (jsonObject.get("result") == "success") {
-                reponseData = jsonObject.get("data") as JSONObject
-                coin = reponseData.getInt("balance")
-                coinText.text = "$coin"
+                responseData = jsonObject.get("data") as JSONObject
+//                coin = responseData.getInt("balance")
+//                coinText.text = "$coin"
+                coinText.text = "${responseData.getInt("balance")}"
 //                pref.saveCoin(coin)
 //                recordList.add(RecordData(costPerTime, sdf.format(System.currentTimeMillis())))
 //                pref.saveRecord(recordList)
@@ -107,10 +119,12 @@ class MainActivity : AppCompatActivity() {
                 showCollectionText.visibility = View.GONE
                 showCollection.visibility = View.GONE
                 showAchievement.visibility = View.GONE
+                showStore.visibility = View.GONE
+                showItem.visibility = View.GONE
                 achievementText.visibility = View.GONE
                 showRecord.hide()
                 handler.post(beginTimer)
-
+                loadingRoot.removeView(loadingView)
             } else {
                 Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
             }
@@ -132,23 +146,26 @@ class MainActivity : AppCompatActivity() {
 
     fun initUserInfo() {
         supportActionBar!!.title = "${userInfo.name} 的跳跳傑特"
-        coin = userInfo.balance
+//        coin = userInfo.balance
 //        coin = 500
-        coinText.text = "$coin"
+        coinText.text = "${userInfo.balance}"
+        initRequestItem()
     }
 
     fun autoLogin(jsonObject: JSONObject) {
         runOnUiThread {
-            loadingRoot.removeView(loadingView)
+
             if (jsonObject.get("result") == "success") {
-                reponseData = jsonObject.get("data") as JSONObject
-                val name = reponseData.getString("name")
-                val balance = reponseData.getInt("balance")
-                val token = reponseData.getString("api_token")
+                responseData = jsonObject.get("data") as JSONObject
+                val name = responseData.getString("name")
+                val balance = responseData.getInt("balance")
+                val token = responseData.getString("api_token")
                 pref.saveToken(token)
                 userInfo = UserInfo(name, balance, token)
+                loadingRoot.removeView(loadingView)
                 initUserInfo()
             } else {
+                loadingRoot.removeView(loadingView)
                 Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
                 pref.removeToken()
                 val intent = Intent(this, LoginActivity::class.java)
@@ -303,24 +320,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    fun resultIndex() {
-//        resultIndex = when (shakeNum / 2) {
-//            in 0..goalNum / 2 -> 0
-//            in goalNum / 2 + 1..goalNum / 2 * 2 -> 1
-//            in goalNum / 2 * 2 + 1..goalNum / 2 * 3 -> 2
-//            in goalNum / 2 * 3 + 1..goalNum / 2 * 4 -> 3
-//            in goalNum / 2 * 4 + 1..goalNum / 2 * 5 -> 4
-//            in goalNum / 2 * 5 + 1..goalNum / 2 * 6 -> 5
-//            in goalNum / 2 * 6 + 1..goalNum / 2 * 7 -> 6
-//            in goalNum / 2 * 7 + 1..goalNum / 2 * 8 -> 7
-//            else -> 8
-//        }
-//        println("************** resultIndex $resultIndex")
-//    }
-
     fun finish(jsonObject: JSONObject) {
         runOnUiThread {
-            loadingRoot.removeView(loadingView)
+
             if (jsonObject.get("result") == "success") {
                 countText.text = "0"
                 countText.visibility = View.GONE
@@ -332,14 +334,17 @@ class MainActivity : AppCompatActivity() {
                 start.visibility = View.VISIBLE
                 showAchievement.visibility = View.VISIBLE
                 achievementText.visibility = View.VISIBLE
+                showStore.visibility = View.VISIBLE
+                showItem.visibility = View.VISIBLE
                 showRecord.show()
             } else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            loadingRoot.removeView(loadingView)
         }
     }
 
     private lateinit var valueAnim: ObjectAnimator
     private fun objectAnimator() {
-        valueAnim = ObjectAnimator.ofFloat(shakeImage, "translationY", 0.0f, -720.0f, 0.0f)
+        valueAnim = ObjectAnimator.ofFloat(jett, "translationY", 0.0f, -720.0f, 0.0f)
         valueAnim.setDuration(500)
         valueAnim.interpolator = DecelerateInterpolator()
     }
@@ -374,51 +379,53 @@ class MainActivity : AppCompatActivity() {
         if (shakeNum / 2 > collectionData.max) {
             collectionData.max = shakeNum / 2
             println("************* resultDialog ${collectionData.max}")
-            pref.saveMax(collectionData.max)
+//            pref.saveMax(collectionData.max)
         }
         beginNum = 3
         shakeNum = 0
         resultIndex = 0
         gaolAddNum = 30
 
+
         AlertDialog.Builder(this)
             .setTitle("本次結果")
             .setView(view)
             .setPositiveButton("OK") { dialog, which ->
-
             }
             .show()
     }
 
     fun requestRecord() {
         loadingRoot.addView(loadingView)
-        requestData = JSONObject()
         okHttp.request(userInfo.token, "/api/detail", ::showRecord, OkHttp.RequestType.GET)
     }
 
     fun showRecord(jsonObject: JSONObject) {
         runOnUiThread {
             recordList.clear()
-            loadingRoot.removeView(loadingView)
+
             if (jsonObject.get("result") == "success") {
-                reponseArrayData = jsonObject.get("data") as JSONArray
-                for (i in 0 until reponseArrayData.length()) {
-                    reponseData = reponseArrayData[i] as JSONObject
+                responseArrayData = jsonObject.get("data") as JSONArray
+                for (i in 0 until responseArrayData.length()) {
+                    responseData = responseArrayData[i] as JSONObject
                     recordList.add(
                         RecordData(
-                            reponseData.getInt("game_id"),
-                            reponseData.getInt("amount"),
-                            reponseData.getString("updated_at")
+                            responseData.getInt("game_id"),
+                            responseData.getString("description"),
+                            responseData.getInt("amount"),
+                            responseData.getString("updated_at")
                         )
                     )
                 }
-                recordList.reverse()
                 val view = LayoutInflater.from(this).inflate(R.layout.record_dialog, null)
                 view.recordRecyclerView.layoutManager = LinearLayoutManager(this)
                 view.recordRecyclerView.adapter = RecordAdapter(this, recordList)
 
+                val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+                titleView.dialogTitle.text = "消費紀錄"
+                titleView.setBackgroundColor(Color.rgb(255, 255, 255))
                 AlertDialog.Builder(this)
-                    .setTitle("消費紀錄")
+                    .setCustomTitle(titleView)
                     .setView(view)
                     .setPositiveButton("OK") { dialog, which ->
                     }
@@ -426,6 +433,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
             }
+            loadingRoot.removeView(loadingView)
         }
     }
 
@@ -436,13 +444,12 @@ class MainActivity : AppCompatActivity() {
 
     fun showCollection(jsonObject: JSONObject) {
         runOnUiThread {
-            loadingRoot.removeView(loadingView)
             if (jsonObject.get("result") == "success") {
-                reponseArrayData = jsonObject.get("data") as JSONArray
+                responseArrayData = jsonObject.get("data") as JSONArray
                 val idList = mutableListOf<Int>()
-                for (i in 0 until reponseArrayData.length()) {
-                    reponseData = reponseArrayData[i] as JSONObject
-                    idList.add(reponseData.getInt("achieve_id"))
+                for (i in 0 until responseArrayData.length()) {
+                    responseData = responseArrayData[i] as JSONObject
+                    idList.add(responseData.getInt("achieve_id"))
                 }
                 for (i in 0 until collectionData.list.size) {
                     if (collectionData.list[i].id in idList) collectionData.list[i].isUnclock = true
@@ -461,6 +468,10 @@ class MainActivity : AppCompatActivity() {
                 view.collectRecyclerView.adapter = adpter
                 view.maxText.text = "目前最高紀錄：${collectionData.max} 下"
 
+                val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+                titleView.dialogTitle.text = "收藏冊"
+                titleView.setBackgroundColor(Color.rgb(255, 255, 255))
+
                 AlertDialog.Builder(this)
                     .setTitle("收藏冊")
                     .setView(view)
@@ -468,6 +479,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     .show()
             } else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            loadingRoot.removeView(loadingView)
         }
     }
 
@@ -481,10 +493,6 @@ class MainActivity : AppCompatActivity() {
         AchievementData(7, "半張小朋友", "儲值總金額達 500", false),
         AchievementData(8, "好野人", "儲值總金額達 1000", false),
         AchievementData(9, "土豪", "儲值總金額達 2000", false)
-//        AchievementData("J", "j"),
-//        AchievementData("K", "k"),
-//        AchievementData("L", "l"),
-//        AchievementData("M", "m")
     )
 
     fun requestAchievement() {
@@ -494,13 +502,12 @@ class MainActivity : AppCompatActivity() {
 
     fun showAchievement(jsonObject: JSONObject) {
         runOnUiThread {
-            loadingRoot.removeView(loadingView)
             if (jsonObject.get("result") == "success") {
-                reponseArrayData = jsonObject.get("data") as JSONArray
+                responseArrayData = jsonObject.get("data") as JSONArray
                 val idList = mutableListOf<Int>()
-                for (i in 0 until reponseArrayData.length()) {
-                    reponseData = reponseArrayData[i] as JSONObject
-                    idList.add(reponseData.getInt("achieve_id"))
+                for (i in 0 until responseArrayData.length()) {
+                    responseData = responseArrayData[i] as JSONObject
+                    idList.add(responseData.getInt("achieve_id"))
                 }
                 for (i in 0 until achievementList.size) {
                     if (achievementList[i].id in idList) achievementList[i].isUnclock = true
@@ -509,13 +516,18 @@ class MainActivity : AppCompatActivity() {
                 view.achievementRecyclerView.layoutManager = LinearLayoutManager(this)
                 view.achievementRecyclerView.adapter = AchievementAdapter(this, achievementList)
 
+                val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+                titleView.dialogTitle.text = "成就"
+                titleView.setBackgroundColor(Color.rgb(255, 255, 255))
+
                 AlertDialog.Builder(this)
-                    .setTitle("成就")
+                    .setCustomTitle(titleView)
                     .setView(view)
                     .setPositiveButton("OK") { dialog, which ->
                     }
                     .show()
             } else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            loadingRoot.removeView(loadingView)
         }
     }
 
@@ -555,45 +567,469 @@ class MainActivity : AppCompatActivity() {
             val json = requestData.toString()
             okHttp.request(json, "/api/logout", ::logout, OkHttp.RequestType.DELETE)
         }
+
+        if (item.itemId == R.id.how) {
+            AlertDialog.Builder(this)
+                .setTitle("遊戲說明")
+                .setMessage("點擊下方的 GO 按鈕 \n倒數三秒後開始快速搖動你的手機直到手機震動為止！\n \n * 此遊戲有九個成就階段，每個階段成功後將自動進入下個階段 \n\n * 階段失敗時將震動提醒遊戲結束 \n\n * 遊戲結算將依達成的最高階段解鎖獎勵小短片 \n\n * 可於收集冊查看所有已獲得小短片")
+                .setPositiveButton("OK") { dialog, which -> }
+                .show()
+        }
         return true
     }
 
     fun logout(jsonObject: JSONObject) {
         runOnUiThread {
-            loadingRoot.removeView(loadingView)
             if (jsonObject.get("result") == "success") {
                 pref.removeToken()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             } else Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            loadingRoot.removeView(loadingView)
+        }
+    }
+
+    fun requestShowStore() {
+        loadingRoot.addView(loadingView)
+        okHttp.request(userInfo.token, "/api/shop/$gameId", ::showStore, OkHttp.RequestType.GET)
+    }
+
+    fun showStore(jsonObject: JSONObject) {
+        runOnUiThread {
+            if (jsonObject.get("result") == "success") {
+                responseArrayData = jsonObject.get("data") as JSONArray
+                val idList = mutableListOf<Int>()
+                var index: Int
+                for (i in 0 until responseArrayData.length()) {
+                    responseData = responseArrayData[i] as JSONObject
+                    idList.add(responseData.getInt("item_id"))
+                }
+                for (i in 0 until idList.size) {
+                    index = itemList.indexOf(itemList.first { it.id == idList[i] })
+                    itemList[index].isBought = true
+                    itemList[index].boughtView.visibility = View.VISIBLE
+                    itemList[buyIndex].cardView.isClickable = false
+                }
+            } else {
+                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            }
+
+            val view = LayoutInflater.from(this).inflate(R.layout.base_dialog, null) as ViewGroup
+            view.addView(storeView)
+
+            val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+            titleView.dialogTitle.text = "商店"
+
+            AlertDialog.Builder(this, R.style.AlertDialogStyle)
+                .setCustomTitle(titleView)
+                .setView(view)
+                .setPositiveButton("OK") { dialog, which ->
+                }
+                .setOnDismissListener { view.removeAllViews() }
+                .show()
+            loadingDialogRoot = view
+            loadingRoot.removeView(loadingView)
+        }
+    }
+
+    val itemList = mutableListOf<ItemData>()
+    lateinit var storeView: View
+    fun initStoreView() {
+        storeView = LayoutInflater.from(this).inflate(R.layout.store_dialog, null)
+        itemList.addAll(
+            mutableListOf(
+                ItemData(
+                    0,
+                    storeView.tieCard,
+                    storeView.tieHasBought,
+                    storeView.tiePrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    1,
+                    storeView.hatCard,
+                    storeView.hatHasBought,
+                    storeView.hatPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    2,
+                    storeView.balloonCard,
+                    storeView.balloonHasBought,
+                    storeView.balloonPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    3,
+                    storeView.sunglassesCard,
+                    storeView.sunglassesHasBought,
+                    storeView.sunglassesPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    4,
+                    storeView.sheepCard,
+                    storeView.sheepHasBought,
+                    storeView.sheepPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    5,
+                    storeView.treeCard,
+                    storeView.treeHasBought,
+                    storeView.treePrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    6,
+                    storeView.houseCard,
+                    storeView.houseHasBought,
+                    storeView.housePrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    7,
+                    storeView.snailCard,
+                    storeView.snailHasBought,
+                    storeView.snailPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    8,
+                    storeView.birdCard,
+                    storeView.birdHasBought,
+                    storeView.birdPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    9,
+                    storeView.cowCard,
+                    storeView.cowHasBought,
+                    storeView.cowPrice.text.toString().toInt(),
+                    false,
+                    false
+                )
+            )
+        )
+
+        itemList.forEach { item ->
+            item.cardView.setOnClickListener {
+                if (!Utils.isFastDoubleClick()) {
+                    println("*************** click")
+                    buyIndex = itemList.indexOf(item)
+                    loadingDialogRoot!!.addView(loadingView)
+                    requestData = JSONObject()
+                    requestData.put("game_id", gameId)
+                    requestData.put("item_id", item.id)
+                    requestData.put("cost", item.consum)
+                    requestData.put("api_token", userInfo.token)
+                    val json = requestData.toString()
+                    okHttp.request(json, "/api/shop", ::buyItem, OkHttp.RequestType.POST)
+                }
+            }
+        }
+
+    }
+
+    var loadingDialogRoot: ViewGroup? = null
+
+    var buyIndex = 0
+
+    fun buyItem(jsonObject: JSONObject) {
+        runOnUiThread {
+            if (jsonObject.get("result") == "success") {
+                responseData = jsonObject.get("data") as JSONObject
+                coinText.text = responseData.getString("balance")
+                itemList[buyIndex].boughtView.visibility = View.VISIBLE
+                itemList[buyIndex].isBought = true
+                itemList[buyIndex].cardView.isClickable = false
+                when (itemList[buyIndex].id) {
+                    5 -> showTree.visibility = View.VISIBLE
+                    6 -> showHouse.visibility = View.VISIBLE
+                    7 -> showSnail.visibility = View.VISIBLE
+                    8 -> showBird.visibility = View.VISIBLE
+                    9 -> showCow.visibility = View.VISIBLE
+                }
+            } else {
+                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            }
+            loadingDialogRoot!!.removeView(loadingView)
+        }
+    }
+
+    fun requestRefresh() {
+        loadingRoot.addView(loadingView)
+        okHttp.request(userInfo.token, "/api/balance", ::refresh, OkHttp.RequestType.GET)
+    }
+
+    fun refresh(jsonObject: JSONObject) {
+        runOnUiThread {
+            if (jsonObject.get("result") == "success") {
+                responseData = jsonObject.get("data") as JSONObject
+                coinText.text = "${responseData.getInt("balance")}"
+            } else {
+                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            }
+            loadingRoot.removeView(loadingView)
+        }
+    }
+
+    lateinit var itemBoxView: View
+    var itemBoxList = mutableListOf<ItemData>()
+    fun initItemBoxView() {
+        itemBoxView = LayoutInflater.from(this).inflate(R.layout.itembox_dialog, null)
+        itemBoxList.addAll(
+            mutableListOf(
+                ItemData(
+                    0,
+                    itemBoxView.boxtieCard,
+                    itemBoxView.boxtieHasBought,
+                    storeView.tiePrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    1,
+                    itemBoxView.boxhatCard,
+                    itemBoxView.boxhatHasBought,
+                    storeView.hatPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    2,
+                    itemBoxView.boxballoonCard,
+                    itemBoxView.boxballonHasBought,
+                    storeView.balloonPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    3,
+                    itemBoxView.boxsunglassesCard,
+                    itemBoxView.boxsunglassesHasBought,
+                    storeView.sunglassesPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    4,
+                    itemBoxView.boxsheepCard,
+                    itemBoxView.boxsheepHasBought,
+                    storeView.sheepPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    5,
+                    itemBoxView.boxtreeCard,
+                    itemBoxView.boxtreeHasBought,
+                    storeView.treePrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    6,
+                    itemBoxView.boxhouseCard,
+                    itemBoxView.boxhouseHasBought,
+                    storeView.housePrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    7,
+                    itemBoxView.boxsnailCard,
+                    itemBoxView.boxsnailHasBought,
+                    storeView.snailPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    8,
+                    itemBoxView.boxbirdCard,
+                    itemBoxView.boxbirdHasBought,
+                    storeView.birdPrice.text.toString().toInt(),
+                    false,
+                    false
+                ),
+                ItemData(
+                    9,
+                    itemBoxView.boxcowCard,
+                    itemBoxView.boxcowHasBought,
+                    storeView.cowPrice.text.toString().toInt(),
+                    false,
+                    false
+                )
+            )
+        )
+
+        itemBoxList.forEach { item ->
+            if (item.id <= 4) {
+                item.cardView.setOnClickListener {
+                    if (!Utils.isFastDoubleClick()) {
+                        println("********************8click")
+
+                        itemBoxList.forEach {
+                            if (it.id == item.id) item.isUsed = !item.isUsed
+                            else it.isUsed = false
+                        }
+                        itemBoxView.tieRadioButton.isChecked = itemBoxList[0].isUsed
+                        itemBoxView.hatRadioButton.isChecked = itemBoxList[1].isUsed
+                        itemBoxView.balloonRadioButton.isChecked = itemBoxList[2].isUsed
+                        itemBoxView.sunglassesRadioButton.isChecked = itemBoxList[3].isUsed
+                        itemBoxView.sheepRadioButton.isChecked = itemBoxList[4].isUsed
+                        if (item.isUsed) {
+                            when (item.id) {
+                                0 -> jett.setImageResource(R.drawable.sheep_tie)
+                                1 -> jett.setImageResource(R.drawable.sheep_hat)
+                                2 -> jett.setImageResource(R.drawable.sheep_ballon)
+                                3 -> jett.setImageResource(R.drawable.sheep_sunglasses)
+                                4 -> jett.setImageResource(R.drawable.sheep_sheep)
+                            }
+                        } else jett.setImageResource(R.drawable.sheep)
+                    }
+                }
+            }
 
         }
     }
 
-    val decorStoreItemList = mutableListOf(ItemData(0,"蝴蝶結",0,false))
-    val backgroundStireItemList = mutableListOf(ItemData(5,"大樹",0,false))
-    fun showStore(){
-        val view = LayoutInflater.from(this).inflate(R.layout.store_dialog, null)
-        view.decorStoreRecyclerView.layoutManager = GridLayoutManager(this,5)
-        view.backStoreRecyclerView.layoutManager = GridLayoutManager(this,5)
-        val decorAdapter = StoreAdapter(this, decorStoreItemList)
-        val backAdapter = StoreAdapter(this,backgroundStireItemList)
-        decorAdapter.setOnClickItemListener(object : StoreAdapter.OnClickItemListener{
-            override fun onItemClick(index: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    fun requestShowItemBox() {
+        loadingRoot.addView(loadingView)
+        okHttp.request(userInfo.token, "/api/shop/$gameId", ::showItemBox, OkHttp.RequestType.GET)
+    }
+
+    fun showItemBox(jsonObject: JSONObject) {
+        runOnUiThread {
+            if (jsonObject.get("result") == "success") {
+                responseArrayData = jsonObject.get("data") as JSONArray
+                val idList = mutableListOf<Int>()
+                var index: Int
+                for (i in 0 until responseArrayData.length()) {
+                    responseData = responseArrayData[i] as JSONObject
+                    idList.add(responseData.getInt("item_id"))
+                }
+                for (i in 0 until idList.size) {
+                    index = itemBoxList.indexOf(itemBoxList.first { it.id == idList[i] })
+                    itemBoxList[index].isBought = true
+                    itemBoxList[index].boughtView.visibility = View.GONE
+//                    itemBoxList[index].cardView.isClickable = true
+                    if (itemBoxList[index].id in 0 until 4) {
+                        itemBoxList[index].cardView.isClickable = true
+
+                    }
+                    println("*****************itemBoxList ${itemBoxList[index].id}")
+                }
+
+            } else {
+                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
             }
 
-        })
-        decorAdapter.setOnClickItemListener(object : StoreAdapter.OnClickItemListener{
-            override fun onItemClick(index: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            val view = LayoutInflater.from(this).inflate(R.layout.base_dialog, null) as ViewGroup
+            view.addView(itemBoxView)
 
-        })
-        view.decorStoreRecyclerView.adapter=decorAdapter
-        view.backStoreRecyclerView.adapter=backAdapter
+            val titleView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+            titleView.dialogTitle.text = "物品盒"
+
+            AlertDialog.Builder(this, R.style.AlertDialogStyle)
+                .setCustomTitle(titleView)
+                .setView(view)
+                .setPositiveButton("OK") { dialog, which ->
+                }
+                .setOnDismissListener {
+                    view.removeAllViews()
+
+                }
+                .show()
+            loadingRoot.removeView(loadingView)
+        }
 
     }
+
+    fun setMainView() {
+        itemBoxList.forEach {
+            when (it.id) {
+//                in 0 until 4 -> {
+//                    if (it.isUsed) {
+//                        when (it.id) {
+//                            0 -> jett.setImageResource(R.drawable.sheep_tie)
+//                            1 -> jett.setImageResource(R.drawable.sheep_hat)
+//                            2 -> jett.setImageResource(R.drawable.sheep_ballon)
+//                            3 -> jett.setImageResource(R.drawable.sheep_sunglasses)
+//                            4 -> jett.setImageResource(R.drawable.sheep_sheep)
+//                        }
+//                    }
+//                }
+
+                in 5 until 9 -> {
+                    if (it.isBought) {
+                        when (it.id) {
+                            5 -> showTree.visibility = View.VISIBLE
+                            6 -> showHouse.visibility = View.VISIBLE
+                            7 -> showSnail.visibility = View.VISIBLE
+                            8 -> showBird.visibility = View.VISIBLE
+                            9 -> showCow.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    fun initRequestItem() {
+//        println("************ ${loadingView.parent}")
+        loadingRoot.addView(loadingView)
+        okHttp.request(userInfo.token, "/api/shop/$gameId", ::initItem, OkHttp.RequestType.GET)
+    }
+
+    fun initItem(jsonObject: JSONObject) {
+        runOnUiThread {
+            if (jsonObject.get("result") == "success") {
+                responseArrayData = jsonObject.get("data") as JSONArray
+                val idList = mutableListOf<Int>()
+                var index: Int
+                for (i in 0 until responseArrayData.length()) {
+                    responseData = responseArrayData[i] as JSONObject
+                    idList.add(responseData.getInt("item_id"))
+                }
+                for (i in 0 until idList.size) {
+                    index = itemBoxList.indexOf(itemBoxList.first { it.id == idList[i] })
+                    itemBoxList[index].isBought = true
+                    itemBoxList[index].boughtView.visibility = View.GONE
+                    when (idList[i]) {
+                        5 -> showTree.visibility = View.VISIBLE
+                        6 -> showHouse.visibility = View.VISIBLE
+                        7 -> showSnail.visibility = View.VISIBLE
+                        8 -> showBird.visibility = View.VISIBLE
+                        9 -> showCow.visibility = View.VISIBLE
+                    }
+                    if (itemBoxList[index].id in 0 until 4) {
+                        itemBoxList[index].cardView.isClickable = true
+
+                    }
+
+                }
+                setMainView()
+            } else {
+                Toast.makeText(this, "${jsonObject.get("message")}", Toast.LENGTH_LONG).show()
+            }
+            loadingRoot.removeView(loadingView)
+        }
+
+    }
+
 
     override fun onBackPressed() {
     }

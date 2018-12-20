@@ -27,6 +27,7 @@ class RecordAdapter(val context: Context, var list: MutableList<RecordData>) :
         val typeImage = itemView.typeImage
         val cost = itemView.coin
         val costTime = itemView.recordTime
+        val content = itemView.content
         @SuppressLint("SetTextI18n")
         fun bind(data: RecordData) {
             when(data.gameId){
@@ -35,8 +36,10 @@ class RecordAdapter(val context: Context, var list: MutableList<RecordData>) :
                 4 -> typeImage.setImageResource(R.drawable.sheep)
                 5 -> typeImage.setImageResource(R.drawable.save_money)
             }
+            content.text = data.content
             cost.text = "${data.balance}"
-            costTime.text = "${data.time}"
+            val time = data.time.split(" ")
+            costTime.text = "${time[0]} \n ${time[1]}"
         }
     }
 }

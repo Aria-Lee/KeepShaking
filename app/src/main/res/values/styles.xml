@@ -11,4 +11,19 @@
         <item name="colorAccent">#0066FF</item>
     </style>
 
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:background">#FF8888</item>
+        <item name="android:textColor">#444444</item>
+    </style>
+
+    <style name="BaseAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:background">#02C3AF</item>
+        <item name="android:textColor">#444444</item>
+    </style>
+
+    <style name="CollectionAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:background">#7CD1FD</item>
+        <item name="android:textColor">#444444</item>
+    </style>
+
 </resources>

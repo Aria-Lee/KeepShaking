@@ -15,18 +15,19 @@
             android:background="@drawable/go"
 
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/itembox"
+            app:layout_constraintStart_toEndOf="@+id/showItem"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/showCollection"/>
 
     <ImageView
-            android:id="@+id/shakeImage"
+            android:id="@+id/jett"
             android:layout_width="89dp"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/sheep" android:layout_marginBottom="88dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:scaleType="fitCenter"
+            app:layout_constraintDimensionRatio="h,1:1.5"/>
 
     <TextView
             android:id="@+id/countText"
@@ -40,20 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:textSize="80sp"/>
 
-    <TextView
-            android:id="@+id/beginTimerText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.7"
-            android:text="3"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            android:textColor="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="80sp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="16dp"/>
+
 
     <TextView
             android:id="@+id/coinText"
@@ -83,7 +71,7 @@
             android:background="@drawable/book"
             app:layout_constraintBottom_toTopOf="@+id/showCollectionText"
             app:layout_constraintStart_toEndOf="@+id/start" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/showAchievement"/>
+            app:layout_constraintEnd_toStartOf="@+id/showAchievement" android:layout_marginBottom="2dp"/>
     <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp" app:srcCompat="@drawable/haystack"
@@ -116,7 +104,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/store" app:layout_constraintStart_toStartOf="@+id/store"/>
+            app:layout_constraintEnd_toEndOf="@+id/showStore" app:layout_constraintStart_toStartOf="@+id/showStore"/>
     <TextView
             android:text="物品盒"
             android:layout_width="wrap_content"
@@ -124,7 +112,7 @@
             android:id="@+id/achievementText3"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/itembox" app:layout_constraintStart_toStartOf="@+id/itembox"
+            app:layout_constraintEnd_toEndOf="@+id/showItem" app:layout_constraintStart_toStartOf="@+id/showItem"
             android:layout_marginBottom="8dp"/>
     <ImageView
             android:layout_width="50dp"
@@ -132,27 +120,90 @@
             android:id="@+id/showAchievement"
             app:layout_constraintBottom_toTopOf="@+id/achievementText"
             app:layout_constraintStart_toEndOf="@+id/showCollection" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="2dp"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="0dp" app:srcCompat="@drawable/ic_refresh_black_24dp"
             android:id="@+id/refreshBalance"
             app:layout_constraintTop_toTopOf="@+id/imageView2"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2" app:layout_constraintStart_toEndOf="@+id/coinText"
-    />
+            android:layout_marginStart="2dp"/>
     <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp" app:srcCompat="@drawable/store"
-            android:id="@+id/store"
+            android:id="@+id/showStore"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/itembox"
-            app:layout_constraintBottom_toTopOf="@+id/achievementText2"/>
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/showItem"
+            app:layout_constraintBottom_toTopOf="@+id/achievementText2" android:layout_marginBottom="2dp"/>
     <ImageView
             android:layout_width="52dp"
             android:layout_height="52dp" app:srcCompat="@drawable/gift"
-            android:id="@+id/itembox"
+            android:id="@+id/showItem"
             app:layout_constraintBottom_toTopOf="@+id/achievementText3"
-            app:layout_constraintStart_toEndOf="@+id/store"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/start"/>
+            app:layout_constraintStart_toEndOf="@+id/showStore"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/start"
+            android:layout_marginBottom="2dp"/>
+
+    <ImageView
+            android:id="@+id/showBird"
+            android:layout_width="99dp"
+            android:layout_height="102dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/coinText"
+            app:srcCompat="@drawable/bird" android:visibility="gone"/>
+
+    <ImageView
+            android:id="@+id/showTree"
+            android:layout_width="136dp"
+            android:layout_height="172dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/showAchievement"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/tree" android:visibility="gone"/>
+
+    <ImageView
+            android:id="@+id/showHouse"
+            android:layout_width="134dp"
+            android:layout_height="140dp"
+            android:layout_marginBottom="92dp"
+            app:layout_constraintBottom_toTopOf="@+id/showStore"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/house" android:visibility="gone"/>
+
+    <ImageView
+            android:id="@+id/showSnail"
+            android:layout_width="36dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="48dp"
+            app:layout_constraintBottom_toTopOf="@+id/showItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/small_snail" android:visibility="gone"/>
+
+    <ImageView
+            android:id="@+id/showCow"
+            android:layout_width="87dp"
+            android:layout_height="95dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/showAchievement"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/cow" android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/beginTimerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.7"
+        android:text="3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="80sp"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"/>
 
 </android.support.constraint.ConstraintLayout>

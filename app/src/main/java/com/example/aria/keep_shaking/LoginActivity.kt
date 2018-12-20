@@ -40,6 +40,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        loginEmail.clearFocus()
+        loginPassword.clearFocus()
+        super.onNewIntent(intent)
+    }
     fun checkisLogin(){
         if(token!=""){
             val intent = Intent(this, MainActivity::class.java)

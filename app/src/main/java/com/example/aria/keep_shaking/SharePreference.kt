@@ -42,7 +42,7 @@ class SharePreference(val context: Context) {
     }
 
     fun getCollection(): CollectionData{
-        return CollectionData(initCollection(), getMax())
+        return CollectionData(initCollection(), 0)
     }
 
     fun getMax(): Int{

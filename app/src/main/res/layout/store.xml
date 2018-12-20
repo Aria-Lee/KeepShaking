@@ -26,33 +26,37 @@
             app:layout_constrainedHeight="true">
 
             <ImageView
-                android:id="@+id/storeImageView"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="2dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_help_black_24dp" />
+                    android:id="@+id/storeImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_help_black_24dp" app:layout_constraintDimensionRatio="1:1"/>
 
             <TextView
-                android:id="@+id/storeImageName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="2dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/storeImageView" />
+                    android:id="@+id/storeImageName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/costImage"
+                    app:layout_constraintEnd_toEndOf="@+id/storeImageView"
+                    app:layout_constraintTop_toTopOf="@+id/costImage"
+                    app:layout_constraintStart_toStartOf="@+id/storeImageView" android:layout_marginStart="12dp"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" app:srcCompat="@drawable/grass"
+                    android:id="@+id/costImage"
+                    android:layout_marginTop="2dp" app:layout_constraintTop_toBottomOf="@+id/storeImageView"
+                    android:rotation="20" android:layout_marginEnd="2dp"
+                    app:layout_constraintEnd_toStartOf="@+id/storeImageName"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
