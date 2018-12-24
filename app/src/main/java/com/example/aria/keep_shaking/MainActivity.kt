@@ -551,6 +551,7 @@ class MainActivity : AppCompatActivity() {
                 .setView(view)
                 .setPositiveButton("OK") { dialog, which ->
                 }
+            .setOnDismissListener { resultIndex = 0 }
                 .show()
     }
 

@@ -66,8 +66,9 @@ class OkHttp(val context: Context) {
 
             override fun onResponse(call: Call, response: Response) {
                 val responseString = response.body()?.string()!!
-                val response = JSONObject(responseString)
                 println("************ $responseString")
+
+                val response = JSONObject(responseString)
                 cb.invoke(response)
             }
         })
