@@ -2,15 +2,15 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/logout"
-        android:icon="@drawable/logout"
-        android:title="Logout"
-        app:showAsAction="always" />
-
-    <item
             android:id="@+id/how"
             android:icon="@drawable/ic_help_outline_black_24dp"
             android:title="Help"
             app:showAsAction="always" />
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/logout"
+        android:title="Logout"
+        app:showAsAction="always" />
 
 </menu>

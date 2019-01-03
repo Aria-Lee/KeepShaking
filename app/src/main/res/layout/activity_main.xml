@@ -1,216 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="@drawable/grassland"
-                                             tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/grassland"
+    tools:context=".MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/showCollection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/showRecord" android:layout_marginBottom="2dp"
+            android:id="@+id/decorParent">
+
+        <ImageView
+                android:id="@+id/showCow"
+                android:layout_width="87dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/cow" android:adjustViewBounds="true"/>
+
+        <ImageView
+                android:id="@+id/showHouse"
+                android:layout_width="134dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="88dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/house" android:adjustViewBounds="true"/>
+
+        <ImageView
+                android:id="@+id/showBird"
+                android:layout_width="99dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="36dp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bird" android:layout_marginTop="6dp" android:adjustViewBounds="true"/>
+
+        <ImageView
+                android:id="@+id/showSnail"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="48dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/small_snail"
+                android:adjustViewBounds="true"/>
+
+        <ImageView
+                android:id="@+id/showTree"
+                android:layout_width="0dp"
+                android:layout_height="172dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="80dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/tree" android:adjustViewBounds="true"/>
+    </android.support.constraint.ConstraintLayout>
 
     <Button
-            android:id="@+id/start"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/go"
+        android:id="@+id/start"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/go"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/showItem"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/showCollection"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/showCollection"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/showItem" />
 
     <ImageView
-        android:id="@+id/jett"
-        android:layout_width="89dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="88dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="h,1:1.5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/sheep" />
+            android:id="@+id/jett"
+            android:layout_width="89dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="88dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/sheep" android:layout_marginEnd="3dp" android:adjustViewBounds="true"/>
 
     <TextView
             android:id="@+id/countText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="0"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textSize="80sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:textSize="80sp"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
     <TextView
-            android:id="@+id/coinText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            android:layout_marginStart="8dp"
-            app:layout_constraintTop_toTopOf="@+id/imageView2"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"/>
+        android:id="@+id/coinText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/showRecord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_receipt_black_24dp" android:background="#00DDAA" app:backgroundTint="#00DDAA"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        android:id="@+id/showRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00DDAA"
+        android:clickable="true"
+        app:backgroundTint="#00DDAA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_receipt_black_24dp" />
 
     <Button
             android:id="@+id/showCollection"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/book"
             app:layout_constraintBottom_toTopOf="@+id/showCollectionText"
-            app:layout_constraintStart_toEndOf="@+id/start" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/showAchievement" android:layout_marginBottom="2dp"/>
-    <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp" app:srcCompat="@drawable/haystack"
-            android:id="@+id/imageView2" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
-    <TextView
-            android:text="收集冊"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/showCollectionText" app:layout_constraintStart_toStartOf="@+id/showCollection"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/showCollection"
-            app:layout_constraintHorizontal_bias="0.357" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    <TextView
-            android:text="成就"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/achievementText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/showAchievement"
-            app:layout_constraintEnd_toEndOf="@+id/showAchievement" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    <TextView
-            android:text="商店"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/achievementText2"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/showStore" app:layout_constraintStart_toStartOf="@+id/showStore"/>
-    <TextView
-            android:text="物品盒"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/achievementText3"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/showItem" app:layout_constraintStart_toStartOf="@+id/showItem"
-            android:layout_marginBottom="8dp"/>
-    <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp" app:srcCompat="@drawable/achievement"
-            android:id="@+id/showAchievement"
-            app:layout_constraintBottom_toTopOf="@+id/achievementText"
-            app:layout_constraintStart_toEndOf="@+id/showCollection" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="2dp"/>
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp" app:srcCompat="@drawable/ic_refresh_black_24dp"
-            android:id="@+id/refreshBalance"
-            app:layout_constraintTop_toTopOf="@+id/imageView2"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2" app:layout_constraintStart_toEndOf="@+id/coinText"
-            android:layout_marginStart="2dp"/>
-    <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp" app:srcCompat="@drawable/store"
-            android:id="@+id/showStore"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/showItem"
-            app:layout_constraintBottom_toTopOf="@+id/achievementText2" android:layout_marginBottom="2dp"/>
-    <ImageView
-            android:layout_width="52dp"
-            android:layout_height="52dp" app:srcCompat="@drawable/gift"
-            android:id="@+id/showItem"
-            app:layout_constraintBottom_toTopOf="@+id/achievementText3"
-            app:layout_constraintStart_toEndOf="@+id/showStore"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/start"
-            android:layout_marginBottom="2dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/showAchievement"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/start" android:layout_marginEnd="10dp"/>
 
     <ImageView
-        android:id="@+id/showBird"
-        android:layout_width="99dp"
-        android:layout_height="102dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="60dp"
-        android:visibility="gone"
+        android:id="@+id/imageView2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bird" />
+        app:srcCompat="@drawable/haystack" />
+
+    <TextView
+        android:id="@+id/showCollectionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="收集冊"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/showCollection"
+        app:layout_constraintHorizontal_bias="0.357"
+        app:layout_constraintStart_toStartOf="@+id/showCollection" />
+
+    <TextView
+        android:id="@+id/achievementText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="成就"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/showAchievement"
+        app:layout_constraintStart_toStartOf="@+id/showAchievement" />
+
+    <TextView
+        android:id="@+id/achievementText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="商店"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/showStore"
+        app:layout_constraintStart_toStartOf="@+id/showStore" />
+
+    <TextView
+        android:id="@+id/achievementText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="物品盒"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/showItem"
+        app:layout_constraintStart_toStartOf="@+id/showItem" />
 
     <ImageView
-        android:id="@+id/showTree"
-        android:layout_width="136dp"
-        android:layout_height="172dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="128dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/showAchievement"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/achievementText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/tree" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/showCollection"
+        app:srcCompat="@drawable/achievement" />
 
     <ImageView
-        android:id="@+id/showHouse"
-        android:layout_width="134dp"
-        android:layout_height="140dp"
-        android:layout_marginBottom="172dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/refreshBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/coinText"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:srcCompat="@drawable/ic_refresh_black_24dp" />
+
+    <ImageView
+        android:id="@+id/showStore"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/achievementText2"
+        app:layout_constraintEnd_toStartOf="@+id/showItem"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/house" />
+        app:srcCompat="@drawable/store" />
 
     <ImageView
-        android:id="@+id/showSnail"
-        android:layout_width="36dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="72dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/small_snail" />
-
-    <ImageView
-        android:id="@+id/showCow"
-        android:layout_width="87dp"
-        android:layout_height="95dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="72dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/cow" />
+            android:id="@+id/showItem"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/achievementText3"
+            app:layout_constraintEnd_toStartOf="@+id/start"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/showStore"
+            app:srcCompat="@drawable/gift" android:adjustViewBounds="true"/>
 
     <TextView
         android:id="@+id/beginTimerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:alpha="0.7"
         android:text="3"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/colorAccent"
+        android:textSize="80sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="80sp"
-        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
